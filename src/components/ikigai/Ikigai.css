@@ -1,482 +1,741 @@
 .ikigai-container {
+    --background: #060b16;
+    --surface: rgba(14, 23, 38, 0.94);
+    --text: #f8fafc;
+    --muted: #a6afbd;
+
     width: 100%;
-    padding: 5rem 1.5rem;
+    min-height: 100vh;
+    padding: 5rem 1.5rem 3rem;
+    color: var(--text);
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 35%,
+            rgba(53, 72, 110, 0.12),
+            transparent 35%),
+        radial-gradient(circle at 10% 70%,
+            rgba(124, 58, 237, 0.06),
+            transparent 30%),
+        var(--background);
 }
 
 .ikigai-header {
-    max-width: 700px;
-    margin: 0 auto 3rem;
+    position: relative;
+    z-index: 20;
+    width: min(100%, 760px);
+    margin: 0 auto 2rem;
     text-align: center;
 }
 
 .ikigai-eyebrow {
     display: inline-block;
-    margin-bottom: 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: #8b5cf6;
+    margin-bottom: 0.7rem;
+    color: #a78bfa;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
 }
 
 .ikigai-header h2 {
     margin: 0;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    color: #18181b;
+    color: #ffffff;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.055em;
 }
 
 .ikigai-header p {
-    margin-top: 1rem;
-    color: #71717a;
+    max-width: 650px;
+    margin: 0.9rem auto 0;
+    color: var(--muted);
+    font-size: 0.9rem;
     line-height: 1.7;
 }
 
-/* =========================================================
-   STAGE
-========================================================= */
-
 .ikigai-stage {
     position: relative;
-
-    width: min(100%, 1050px);
-    aspect-ratio: 1 / 1;
-
+    width: min(100%, 1100px);
+    height: 960px;
     margin: 0 auto;
+    isolation: isolate;
 }
 
-.ikigai-project-lines {
+.ikigai-diagram {
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 43%;
+    width: min(960px, 90vw);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
 
+.ikigai-diagram-inner {
+    position: relative;
     width: 100%;
     height: 100%;
+}
 
-    pointer-events: none;
+.ikigai-circle {
+    position: absolute;
+    width: 68%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
 
-    overflow: visible;
+    transition:
+        filter 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
 
     z-index: 1;
 }
 
-.ikigai-project-line {
-    fill: none;
-    stroke-linecap: round;
+.ikigai-circle::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.35;
+
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(255, 255, 255, 0.06),
+            transparent 60%);
 }
 
-/* =========================================================
-   DIAGRAMA
-========================================================= */
-
-.ikigai-diagram {
+.ikigai-circle::after {
+    content: "";
     position: absolute;
+    inset: 2px;
+    border-radius: inherit;
 
-    left: 50%;
-    top: 50%;
+    background:
+        radial-gradient(circle at 50% 50%,
+            rgba(255, 255, 255, 0.025),
+            transparent 68%);
 
-    width: 58%;
-    aspect-ratio: 1;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 2;
+    pointer-events: none;
 }
 
-/* =========================================================
-   CIRCULOS
-========================================================= */
-
-.ikigai-circle {
-    position: absolute;
-
-    width: 58%;
-    aspect-ratio: 1;
-
-    border-radius: 50%;
-
-    border: 2px solid rgba(255, 255, 255, 0.85);
-
-    overflow: hidden;
+.ikigai-circle.is-active {
+    z-index: 10;
+    filter: brightness(1.18);
 
     box-shadow:
-        inset 0 0 30px rgba(255, 255, 255, 0.08),
-        0 10px 30px rgba(0, 0, 0, 0.08);
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 45px rgba(255, 255, 255, 0.08);
 }
 
 .circle-love {
-    left: 0;
-    top: 0;
+    left: 0%;
+    top: 0%;
 
     background:
-        radial-gradient(circle at 65% 65%,
-            rgba(244, 63, 94, 0.55),
-            rgba(157, 23, 77, 0.9));
+        linear-gradient(145deg,
+            rgba(93, 12, 36, 0.54),
+            rgba(197, 39, 76, 0.34));
+
+    border: 2px solid rgba(255, 59, 92, 0.68);
+
+    box-shadow:
+        0 0 35px rgba(255, 59, 92, 0.14);
 }
 
 .circle-world {
-    right: 0;
-    top: 0;
+    right: 0%;
+    top: 0%;
 
     background:
-        radial-gradient(circle at 35% 65%,
-            rgba(14, 165, 233, 0.55),
-            rgba(30, 64, 175, 0.9));
+        linear-gradient(145deg,
+            rgba(22, 57, 119, 0.56),
+            rgba(38, 109, 185, 0.34));
+
+    border: 2px solid rgba(59, 130, 246, 0.7);
+
+    box-shadow:
+        0 0 35px rgba(59, 130, 246, 0.15);
 }
 
 .circle-good {
-    left: 0;
-    bottom: 0;
+    left: 0%;
+    bottom: 0%;
 
     background:
-        radial-gradient(circle at 65% 35%,
-            rgba(251, 191, 36, 0.55),
-            rgba(194, 65, 12, 0.9));
+        linear-gradient(145deg,
+            rgba(112, 54, 0, 0.56),
+            rgba(217, 109, 9, 0.34));
+
+    border: 2px solid rgba(255, 157, 0, 0.72);
+
+    box-shadow:
+        0 0 35px rgba(255, 157, 0, 0.14);
 }
 
 .circle-paid {
-    right: 0;
-    bottom: 0;
+    right: 0%;
+    bottom: 0%;
 
     background:
-        radial-gradient(circle at 35% 35%,
-            rgba(34, 197, 94, 0.55),
-            rgba(20, 83, 45, 0.95));
+        linear-gradient(145deg,
+            rgba(5, 71, 45, 0.56),
+            rgba(20, 137, 79, 0.34));
+
+    border: 2px solid rgba(34, 197, 94, 0.7);
+
+    box-shadow:
+        0 0 35px rgba(34, 197, 94, 0.15);
 }
 
-/* =========================================================
-   CONTENIDO DE LOS CIRCULOS
-========================================================= */
-
-.ikigai-section {
+.ikigai-circle-content {
     position: absolute;
-
-    width: 45%;
-
-    color: white;
-}
-
-.ikigai-section h3 {
-    margin: 0 0 0.4rem;
-
-    font-size: clamp(0.65rem, 1.3vw, 1rem);
-    font-weight: 800;
-}
-
-.section-love {
-    top: 18%;
-    left: 15%;
-    transform: rotate(-8deg);
-}
-
-.section-world {
-    top: 18%;
-    right: 12%;
-    text-align: right;
-    transform: rotate(8deg);
-}
-
-.section-good {
-    bottom: 15%;
-    left: 13%;
-}
-
-.section-paid {
-    bottom: 15%;
-    right: 12%;
-    text-align: right;
-}
-
-.ikigai-list {
-    margin: 0;
-    padding-left: 1rem;
-
-    font-size: clamp(0.45rem, 0.9vw, 0.7rem);
-
-    line-height: 1.45;
-}
-
-.ikigai-list li {
-    margin-bottom: 0.15rem;
-}
-
-/* =========================================================
-   INTERSECCIONES
-========================================================= */
-
-.ikigai-intersection {
-    position: absolute;
-
     z-index: 5;
 
-    text-align: center;
+    display: flex;
+    flex-direction: column;
 
-    color: white;
+    gap: 0.38rem;
+    width: 58%;
+
+    pointer-events: none;
+    transform-origin: center center;
 }
 
-.ikigai-intersection strong {
-    display: block;
-
-    margin-bottom: 0.2rem;
-
-    font-size: clamp(0.7rem, 1.5vw, 1.2rem);
-    font-weight: 800;
+.circle-love .ikigai-circle-content {
+    left: 6%;
+    top: 15%;
+    align-items: flex-start;
+    text-align: left;
+    transform: rotate(-42deg);
 }
 
-.ikigai-intersection .ikigai-list {
-    padding: 0;
-
-    list-style: none;
-
-    font-size: clamp(0.45rem, 0.8vw, 0.65rem);
+.circle-world .ikigai-circle-content {
+    right: 6%;
+    top: 15%;
+    align-items: flex-end;
+    text-align: right;
+    transform: rotate(42deg);
 }
 
-.intersection-mission {
-    top: 22%;
-    left: 50%;
-    transform: translateX(-50%);
+.circle-good .ikigai-circle-content {
+    left: 6%;
+    bottom: 14%;
+    align-items: flex-start;
+    text-align: left;
+    transform: rotate(42deg);
 }
 
-.intersection-vocation {
-    top: 50%;
-    right: 8%;
-    transform: translateY(-50%);
+.circle-paid .ikigai-circle-content {
+    right: 6%;
+    bottom: 14%;
+    align-items: flex-end;
+    text-align: right;
+    transform: rotate(-42deg);
 }
 
-.intersection-profession {
-    bottom: 19%;
-    left: 50%;
-    transform: translateX(-50%);
+.ikigai-circle-title {
+    display: flex;
+    align-items: center;
+    gap: 0.48rem;
 }
 
-.intersection-passion {
-    top: 50%;
-    left: 8%;
-    transform: translateY(-50%);
+.circle-world .ikigai-circle-title,
+.circle-paid .ikigai-circle-title {
+    flex-direction: row-reverse;
 }
 
-/* =========================================================
-   ETIQUETAS INTERNAS
-========================================================= */
+.ikigai-circle-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
 
-.ikigai-small-label {
-    position: absolute;
+.ikigai-circle h3 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.02rem;
+    margin: 0;
 
-    z-index: 6;
+    color: rgba(255, 255, 255, 0.82);
 
-    font-size: clamp(0.5rem, 1vw, 0.7rem);
+    font-size: clamp(0.62rem, 1vw, 0.82rem);
     font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0;
 
-    color: rgba(255, 255, 255, 0.85);
-
-    text-align: center;
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.55);
 }
 
-.ikigai-small-label span {
+.ikigai-circle h3 strong {
     display: block;
+    color: #ffffff;
 
-    margin-bottom: 0.2rem;
+    font-size: clamp(0.95rem, 1.8vw, 1.45rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+
+    text-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.55);
 }
 
-.ikigai-small-label .ikigai-list {
-    padding: 0;
+.ikigai-circle-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
 
-    list-style: none;
+    padding: 0.28rem 0.52rem;
 
-    font-size: 0.5rem;
+    border: 1px solid color-mix(in srgb,
+            var(--badge-color) 55%,
+            transparent);
+
+    border-radius: 7px;
+
+    background:
+        color-mix(in srgb,
+            var(--badge-color) 13%,
+            rgba(0, 0, 0, 0.22));
+
+    box-shadow:
+        0 5px 20px color-mix(in srgb,
+            var(--badge-color) 10%,
+            transparent);
+
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: 0.55rem;
+    font-weight: 750;
 }
 
-.label-personality {
-    top: 35%;
-    left: 25%;
-    transform: rotate(-20deg);
+.ikigai-circle-hint {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.65rem;
 }
 
-.label-career {
-    top: 35%;
-    right: 25%;
-    transform: rotate(20deg);
-}
-
-.label-rarity {
-    bottom: 34%;
-    left: 25%;
-    transform: rotate(20deg);
-}
-
-.label-archetype {
-    bottom: 34%;
-    right: 25%;
-    transform: rotate(-20deg);
-}
-
-/* =========================================================
-   CENTRO
-========================================================= */
-
-.ikigai-core {
+.ikigai-intersection-wrapper {
     position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 30%;
-    aspect-ratio: 1;
-
-    transform: translate(-50%, -50%);
+    z-index: 40;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    width: 13%;
+    min-width: 100px;
 
-    background:
-        radial-gradient(circle,
-            #ffffff 0%,
-            #fafafa 70%,
-            #f4f4f5 100%);
+    cursor: pointer;
+    pointer-events: auto;
+}
 
-    border: 2px solid rgba(255, 255, 255, 0.9);
+.ikigai-intersection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    box-shadow:
-        0 15px 45px rgba(0, 0, 0, 0.15);
+    gap: 0.2rem;
+    width: 100%;
+    padding: 0.45rem 0.7rem;
 
-    z-index: 20;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+
+    color: white;
+    text-align: center;
+    background: rgba(5, 10, 20, 0.08);
 
     transition:
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.ikigai-core.is-active {
-    border-color: #c084fc;
+.ikigai-intersection strong {
+    display: block;
+    color: rgba(255, 255, 255, 0.94);
+
+    font-size: clamp(0.72rem, 1.15vw, 0.95rem);
+    font-weight: 850;
+    line-height: 1.1;
+    white-space: nowrap;
+    letter-spacing: -0.015em;
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+.ikigai-intersection span {
+    display: block;
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: clamp(0.43rem, 0.65vw, 0.56rem);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.ikigai-intersection.is-active {
+    background:
+        rgba(255, 255, 255, 0.11);
+
+    border-color:
+        rgba(255, 255, 255, 0.16);
 
     box-shadow:
-        0 0 0 8px rgba(192, 132, 252, 0.12),
-        0 0 40px rgba(168, 85, 247, 0.45),
-        0 20px 60px rgba(0, 0, 0, 0.15);
+        0 0 22px rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(6px);
 }
 
-.ikigai-core span {
-    color: #27272a;
+.intersection-mission {
+    left: 50%;
+    top: 27%;
 
-    font-size: clamp(1rem, 3vw, 2.8rem);
-
-    font-weight: 900;
-
-    letter-spacing: -0.06em;
+    transform: translate(-50%, -50%);
 }
 
-/* =========================================================
-   PROYECTOS
-========================================================= */
+.intersection-vocation {
+    left: 73%;
+    top: 50%;
 
-.ikigai-project {
+    transform: translate(-50%, -50%);
+}
+
+.intersection-profession {
+    left: 50%;
+    top: 73%;
+
+    transform: translate(-50%, -50%);
+}
+
+.intersection-passion {
+    left: 27%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.ikigai-small-label-wrapper {
+    position: absolute;
+    z-index: 45;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 11%;
+    min-width: 82px;
+
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.ikigai-small-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.12rem;
+    width: 100%;
+    padding: 0.28rem 0.4rem;
+
+    border: 1px solid transparent;
+    border-radius: 7px;
+
+    color: rgba(255, 255, 255, 0.82);
+    text-align: center;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.ikigai-small-label span {
+    display: block;
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+    font-weight: 800;
+    line-height: 1.05;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+
+    text-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.8);
+}
+
+.ikigai-small-label small {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: clamp(0.42rem, 0.58vw, 0.5rem);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.ikigai-small-label.is-active {
+    background:
+        rgba(255, 255, 255, 0.1);
+
+    border-color:
+        rgba(255, 255, 255, 0.12);
+
+    color: white;
+
+    box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(7px);
+}
+
+.label-personality {
+    left: 39.5%;
+    top: 40%;
+
+    transform: translate(-50%, -50%) rotate(-18deg);
+}
+
+.label-career {
+    left: 60.5%;
+    top: 40%;
+
+    transform: translate(-50%, -50%) rotate(18deg);
+}
+
+.label-rarity {
+    left: 39.5%;
+    top: 60%;
+
+    transform: translate(-50%, -50%) rotate(18deg);
+}
+
+.label-archetype {
+    left: 60.5%;
+    top: 60%;
+
+    transform: translate(-50%, -50%) rotate(-18deg);
+}
+
+.ikigai-core-wrapper {
     position: absolute;
 
-    z-index: 30;
+    left: 50%;
+    top: 50%;
+
+    width: 19%;
+    aspect-ratio: 1;
 
     transform: translate(-50%, -50%);
 
-    width: clamp(145px, 18vw, 210px);
-
+    z-index: 60;
     cursor: pointer;
 }
 
-.project-card {
-    padding: 1rem;
+.ikigai-core {
+    width: 100%;
+    height: 100%;
 
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    border-radius: 18px;
+    gap: 0.25rem;
+
+    border: 2px solid rgba(255, 255, 255, 0.82);
+    border-radius: 50%;
 
     background:
-        rgba(255, 255, 255, 0.9);
+        radial-gradient(circle at 35% 30%,
+            #ffffff,
+            #e7e9ee 65%,
+            #bfc5d0);
 
-    backdrop-filter: blur(16px);
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.12);
-
-    transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.ikigai-project.is-active .project-card {
-    border-color: #c084fc;
+    color: #111827;
 
     box-shadow:
-        0 0 0 4px rgba(192, 132, 252, 0.12),
-        0 20px 45px rgba(124, 58, 237, 0.2);
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 35px rgba(255, 255, 255, 0.15);
 }
 
-.project-number {
-    font-size: 0.65rem;
-    font-weight: 800;
-
-    color: #8b5cf6;
+.ikigai-core.is-active {
+    box-shadow:
+        0 0 0 8px rgba(255, 255, 255, 0.06),
+        0 0 55px rgba(255, 255, 255, 0.3),
+        0 25px 70px rgba(0, 0, 0, 0.45);
 }
 
-.project-card h3 {
-    margin: 0.25rem 0 0.6rem;
+.ikigai-core span {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    color: #27272a;
-
-    font-size: 0.95rem;
-    font-weight: 800;
+    font-size: clamp(1.25rem, 2.45vw, 2.15rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
 }
 
-.project-technologies {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 0.3rem;
-}
-
-.project-technologies span {
-    padding: 0.2rem 0.45rem;
-
-    border-radius: 999px;
-
-    background: #f4f4f5;
-
-    color: #52525b;
-
-    font-size: 0.55rem;
+.ikigai-core small {
+    color: #4b5563;
+    font-size: 0.48rem;
     font-weight: 700;
 }
 
-.project-description {
-    margin-top: 0.7rem;
+.ikigai-tooltip {
+    position: absolute;
 
-    padding-top: 0.7rem;
+    width: min(360px, calc(100% - 32px));
+    max-height: 360px;
 
-    border-top: 1px solid #e4e4e7;
+    padding: 1rem 1.1rem;
 
-    color: #52525b;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 16px;
 
-    font-size: 0.7rem;
+    background:
+        linear-gradient(145deg,
+            rgba(18, 27, 39, 0.98),
+            rgba(8, 15, 25, 0.97));
 
-    line-height: 1.5;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 25px color-mix(in srgb,
+            var(--accent-color) 20%,
+            transparent);
 
-    overflow: hidden;
+    backdrop-filter: blur(20px);
+    overflow-y: auto;
+
+    z-index: 500;
+    pointer-events: none;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.ikigai-tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 
-@media (max-width: 700px) {
+.ikigai-tooltip-dot {
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+}
+
+.ikigai-tooltip-header h4 {
+    margin: 0;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 900;
+}
+
+.ikigai-tooltip-header span {
+    display: block;
+    margin-top: 0.15rem;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.62rem;
+}
+
+.ikigai-tooltip-divider {
+    height: 1px;
+    margin: 0.85rem 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.ikigai-tooltip ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.ikigai-tooltip li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: 0.73rem;
+    line-height: 1.45;
+}
+
+.ikigai-tooltip-item-dot {
+    flex-shrink: 0;
+
+    width: 7px;
+    height: 7px;
+
+    margin-top: 0.32rem;
+
+    border-radius: 50%;
+}
+
+.ikigai-tooltip-arrow {
+    position: absolute;
+
+    top: -10px;
+    left: 22px;
+
+    width: 0;
+    height: 0;
+
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+@media (max-width: 900px) {
     .ikigai-container {
-        padding-inline: 0.75rem;
+        overflow-x: auto;
     }
 
     .ikigai-stage {
-        min-width: 700px;
+        width: 850px;
+        height: 920px;
+        margin-left: 50%;
+        transform: translateX(-50%);
     }
 
+    .ikigai-diagram {
+        width: 760px;
+        top: 43%;
+    }
+}
+
+@media (max-width: 600px) {
     .ikigai-container {
-        overflow-x: auto;
+        padding-inline: 0.5rem;
+    }
+
+    .ikigai-header {
+        padding-inline: 1rem;
+    }
+
+    .ikigai-instruction {
+        font-size: 0.6rem;
     }
 }

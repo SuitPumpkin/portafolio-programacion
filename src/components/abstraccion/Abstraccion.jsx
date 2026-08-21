@@ -81,8 +81,8 @@ function AbstractionNode({
     return (
         <motion.div
             className={`abstraction-node ${side === "left"
-                    ? "node-left"
-                    : "node-right"
+                ? "node-left"
+                : "node-right"
                 } ${active ? "is-active" : ""}`}
             animate={{
                 scale: active ? 1.05 : 1,
@@ -145,9 +145,6 @@ export default function Abstraccion({
 
     return (
         <section className="abstraction-container">
-            {/* =====================================================
-          HEADER
-      ===================================================== */}
 
             <div className="abstraction-header">
                 <span className="abstraction-eyebrow">
@@ -161,10 +158,6 @@ export default function Abstraccion({
                 )}
             </div>
 
-            {/* =====================================================
-          VISUALIZACIÓN
-      ===================================================== */}
-
             <div
                 className="abstraction-scroll"
             >
@@ -174,9 +167,6 @@ export default function Abstraccion({
                         height: `${stageHeight}px`,
                     }}
                 >
-                    {/* =================================================
-              LINEAS SVG
-          ================================================= */}
 
                     <svg
                         className="abstraction-lines"
@@ -196,8 +186,6 @@ export default function Abstraccion({
                                 </feMerge>
                             </filter>
                         </defs>
-
-                        {/* Propiedades */}
 
                         {propiedades.map((item, index) => {
                             const isActive =
@@ -236,8 +224,6 @@ export default function Abstraccion({
                                 />
                             );
                         })}
-
-                        {/* Métodos */}
 
                         {metodos.map((item, index) => {
                             const isActive =
@@ -278,10 +264,6 @@ export default function Abstraccion({
                         })}
                     </svg>
 
-                    {/* =================================================
-              PROPIEDADES
-          ================================================= */}
-
                     <div className="abstraction-column properties-column">
                         <div className="column-label">
                             <span>01</span>
@@ -320,10 +302,6 @@ export default function Abstraccion({
                         )}
                     </div>
 
-                    {/* =================================================
-              PERRO / OBJETO
-          ================================================= */}
-
                     <motion.div
                         className="abstraction-object"
                         animate={
@@ -336,17 +314,9 @@ export default function Abstraccion({
                                         -1,
                                         0,
                                     ],
-                                    x: [
-                                        0,
-                                        -2,
-                                        2,
-                                        -1,
-                                        0,
-                                    ],
                                 }
                                 : {
                                     rotate: 0,
-                                    x: 0,
                                 }
                         }
                         transition={{
@@ -364,10 +334,6 @@ export default function Abstraccion({
                             OBJETO
                         </span>
                     </motion.div>
-
-                    {/* =================================================
-              MÉTODOS
-          ================================================= */}
 
                     <div className="abstraction-column methods-column">
                         <div className="column-label">

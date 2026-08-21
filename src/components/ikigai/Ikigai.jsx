@@ -2,34 +2,251 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import "./Ikigai.css";
 
-const positions = [
-    { x: 50, y: 7 },
-    { x: 84, y: 25 },
-    { x: 84, y: 75 },
-    { x: 50, y: 93 },
-    { x: 16, y: 75 },
-    { x: 16, y: 25 },
-];
 
-function ListContent({ items }) {
+const sectionColors = {
+    love: "#ff3b5c",
+    world: "#3b82f6",
+    goodAt: "#ff9d00",
+    paidFor: "#22c55e",
+
+    mission: "#a78bfa",
+    vocation: "#38bdf8",
+    profession: "#fbbf24",
+    passion: "#fb923c",
+
+    personality: "#f472b6",
+    career: "#60a5fa",
+    rarity: "#f59e0b",
+    archetype: "#4ade80",
+
+    ikigai: "#ffffff",
+};
+
+
+/* =========================================================
+   TOOLTIP
+   ========================================================= */
+
+function DetailTooltip({
+    title,
+    items,
+    color,
+    position,
+}) {
     return (
-        <ul className="ikigai-list">
-            {items.map((item, index) => (
-                <li key={index}>{item}</li>
-            ))}
-        </ul>
+        <motion.div
+            className="ikigai-tooltip"
+            style={{
+                left: position.x,
+                top: position.y,
+                "--accent-color": color,
+            }}
+            initial={{
+                opacity: 0,
+                scale: 0.96,
+                y: 8,
+            }}
+            animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+            }}
+            exit={{
+                opacity: 0,
+                scale: 0.96,
+                y: 8,
+            }}
+            transition={{
+                duration: 0.16,
+                ease: "easeOut",
+            }}
+        >
+            <div
+                className="ikigai-tooltip-arrow"
+                style={{
+                    borderBottomColor: color,
+                }}
+            />
+
+            <div className="ikigai-tooltip-header">
+                <span
+                    className="ikigai-tooltip-dot"
+                    style={{
+                        backgroundColor: color,
+                        boxShadow: `0 0 14px ${color}`,
+                    }}
+                />
+
+                <div>
+                    <h4>{title}</h4>
+
+                    <span>
+                        {items.length}{" "}
+                        {items.length === 1
+                            ? "idea"
+                            : "ideas"}
+                    </span>
+                </div>
+            </div>
+
+            <div className="ikigai-tooltip-divider" />
+
+            <ul>
+                {items.map((item, index) => (
+                    <li key={`${item}-${index}`}>
+                        <span
+                            className="ikigai-tooltip-item-dot"
+                            style={{
+                                backgroundColor: color,
+                            }}
+                        />
+
+                        {item}
+                    </li>
+                ))}
+            </ul>
+        </motion.div>
     );
 }
 
-function IkigaiSection({ title, items, className }) {
-    return (
-        <div className={`ikigai-section ${className}`}>
-            <h3>{title}</h3>
 
-            <ListContent items={items} />
+/* =========================================================
+   CÍRCULO PRINCIPAL
+   ========================================================= */
+
+function MainCircle({
+    titlePrefix,
+    titleHighlight,
+    items,
+    className,
+    color,
+    active,
+    onMouseMove,
+}) {
+    return (
+        <motion.div
+            className={`ikigai-circle ${className} ${active ? "is-active" : ""
+                }`}
+            animate={{
+                scale: active ? 1.015 : 1,
+            }}
+            transition={{
+                duration: 0.2,
+            }}
+            onMouseMove={onMouseMove}
+        >
+            <div className="ikigai-circle-content">
+                <div className="ikigai-circle-title">
+                    <span
+                        className="ikigai-circle-dot"
+                        style={{
+                            backgroundColor: color,
+                            boxShadow: `0 0 14px ${color}`,
+                        }}
+                    />
+
+                    <h3>
+                        <span>
+                            {titlePrefix}
+                        </span>
+
+                        <strong>
+                            {titleHighlight}
+                        </strong>
+                    </h3>
+                </div>
+
+                <span
+                    className="ikigai-circle-badge"
+                    style={{
+                        "--badge-color": color,
+                    }}
+                >
+                    {items.length} elementos
+                </span>
+            </div>
+        </motion.div>
+    );
+}
+
+
+/* =========================================================
+   INTERSECCIÓN
+   ========================================================= */
+
+function Intersection({
+    title,
+    items,
+    className,
+    active,
+    onMouseMove,
+}) {
+    return (
+        <div
+            className={`ikigai-intersection-wrapper ${className}`}
+            onMouseMove={onMouseMove}
+        >
+            <motion.div
+                className={`ikigai-intersection ${active ? "is-active" : ""
+                    }`}
+                animate={{
+                    scale: active ? 1.06 : 1,
+                }}
+                transition={{
+                    duration: 0.18,
+                }}
+            >
+                <strong>{title}</strong>
+
+                <span>
+                    {items.length} ideas
+                </span>
+            </motion.div>
         </div>
     );
 }
+
+
+/* =========================================================
+   LABEL DE INTERSECCIÓN TRIPLE
+   ========================================================= */
+
+function SmallLabel({
+    title,
+    items,
+    className,
+    active,
+    onMouseMove,
+}) {
+    return (
+        <div
+            className={`ikigai-small-label-wrapper ${className}`}
+            onMouseMove={onMouseMove}
+        >
+            <motion.div
+                className={`ikigai-small-label ${active ? "is-active" : ""
+                    }`}
+                animate={{
+                    scale: active ? 1.06 : 1,
+                }}
+                transition={{
+                    duration: 0.18,
+                }}
+            >
+                <span>{title}</span>
+
+                <small>
+                    {items.length} ideas
+                </small>
+            </motion.div>
+        </div>
+    );
+}
+
+
+/* =========================================================
+   COMPONENTE PRINCIPAL
+   ========================================================= */
 
 export default function Ikigai({
     love = [],
@@ -47,283 +264,519 @@ export default function Ikigai({
     archetype = [],
     personality = [],
 
-    projects = [],
+    ikigai = [],
 }) {
-    const [activeProject, setActiveProject] = useState(null);
+    const [activeSection, setActiveSection] =
+        useState(null);
 
-    const activeProjectData =
-        activeProject !== null ? projects[activeProject] : null;
+    const [tooltipPosition, setTooltipPosition] =
+        useState({
+            x: 0,
+            y: 0,
+        });
+
+
+    /* =====================================================
+       DATOS
+       ===================================================== */
+
+    const sectionData = {
+        love: {
+            title: "Lo que amo",
+            items: love,
+            color: sectionColors.love,
+        },
+
+        world: {
+            title: "El mundo necesita",
+            items: worldNeeds,
+            color: sectionColors.world,
+        },
+
+        goodAt: {
+            title: "En lo que soy bueno",
+            items: goodAt,
+            color: sectionColors.goodAt,
+        },
+
+        paidFor: {
+            title: "Por lo que me pueden pagar",
+            items: paidFor,
+            color: sectionColors.paidFor,
+        },
+
+        mission: {
+            title: "Misión",
+            items: mission,
+            color: sectionColors.mission,
+        },
+
+        vocation: {
+            title: "Vocación",
+            items: vocation,
+            color: sectionColors.vocation,
+        },
+
+        profession: {
+            title: "Profesión",
+            items: profession,
+            color: sectionColors.profession,
+        },
+
+        passion: {
+            title: "Pasión",
+            items: passion,
+            color: sectionColors.passion,
+        },
+
+        personality: {
+            title: "Personalidad",
+            items: personality,
+            color: sectionColors.personality,
+        },
+
+        career: {
+            title: "Carrera",
+            items: career,
+            color: sectionColors.career,
+        },
+
+        rarity: {
+            title: "Rareza",
+            items: rarity,
+            color: sectionColors.rarity,
+        },
+
+        archetype: {
+            title: "Arquetipo",
+            items: archetype,
+            color: sectionColors.archetype,
+        },
+
+        ikigai: {
+            title: "Mi Ikigai",
+            items: ikigai,
+            color: sectionColors.ikigai,
+        },
+    };
+
+
+    const activeSectionData =
+        activeSection !== null
+            ? sectionData[activeSection]
+            : null;
+
+
+    /* =====================================================
+       MOUSE / TOOLTIP
+       ===================================================== */
+
+    const handleSectionMouseMove =
+        (section) => (event) => {
+            const stage =
+                event.currentTarget.closest(
+                    ".ikigai-stage"
+                );
+
+            if (!stage) {
+                return;
+            }
+
+            const stageRect =
+                stage.getBoundingClientRect();
+
+            const mouseX =
+                event.clientX - stageRect.left;
+
+            const mouseY =
+                event.clientY - stageRect.top;
+
+            const offsetX = 18;
+            const offsetY = 22;
+
+            const tooltipWidth = 370;
+            const tooltipHeight = 360;
+
+            let x =
+                mouseX + offsetX;
+
+            let y =
+                mouseY + offsetY;
+
+
+            if (
+                x + tooltipWidth >
+                stageRect.width - 16
+            ) {
+                x =
+                    mouseX -
+                    tooltipWidth -
+                    offsetX;
+            }
+
+
+            if (
+                y + tooltipHeight >
+                stageRect.height - 16
+            ) {
+                y =
+                    mouseY -
+                    tooltipHeight -
+                    offsetY;
+            }
+
+
+            x = Math.max(16, x);
+            y = Math.max(16, y);
+
+
+            setTooltipPosition({
+                x,
+                y,
+            });
+
+            setActiveSection(section);
+        };
+
+
+    const clearActiveState = () => {
+        setActiveSection(null);
+    };
+
+
+    /* =====================================================
+       RENDER
+       ===================================================== */
 
     return (
         <section className="ikigai-container">
-            <div className="ikigai-header">
-                <span className="ikigai-eyebrow">SEMANA 01</span>
 
-                <h2>Mi Ikigai</h2>
+            {/* =================================================
+                HEADER
+                ================================================= */}
+
+            <header className="ikigai-header">
+
+                <span className="ikigai-eyebrow">
+                    EXPLORACIÓN PERSONAL
+                </span>
+
+                <h2>
+                    Mi Ikigai
+                </h2>
 
                 <p>
-                    Una representación visual de lo que me apasiona, mis habilidades,
-                    lo que puedo aportar y las oportunidades que puedo desarrollar.
+                    La intersección entre lo que amo,
+                    aquello en lo que soy bueno,
+                    lo que el mundo necesita y aquello
+                    por lo que puedo aportar valor.
                 </p>
-            </div>
 
-            <div className="ikigai-stage">
-                {/* =========================================================
-            CONECTORES DE PROYECTOS
-        ========================================================= */}
+            </header>
 
-                <svg
-                    className="ikigai-project-lines"
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="none"
-                >
-                    <defs>
-                        <filter id="ikigai-glow">
-                            <feGaussianBlur stdDeviation="0.8" result="blur" />
 
-                            <feMerge>
-                                <feMergeNode in="blur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
+            {/* =================================================
+                DIAGRAMA
+                ================================================= */}
 
-                        <marker
-                            id="arrow-normal"
-                            markerWidth="4"
-                            markerHeight="4"
-                            refX="3"
-                            refY="2"
-                            orient="auto"
-                        >
-                            <path d="M0,0 L4,2 L0,4 Z" fill="#7c3aed" />
-                        </marker>
+            <div
+                className="ikigai-stage"
+                onMouseLeave={clearActiveState}
+            >
 
-                        <marker
-                            id="arrow-active"
-                            markerWidth="4"
-                            markerHeight="4"
-                            refX="3"
-                            refY="2"
-                            orient="auto"
-                        >
-                            <path d="M0,0 L4,2 L0,4 Z" fill="#c084fc" />
-                        </marker>
-                    </defs>
+                <div className="ikigai-diagram">
 
-                    {projects.map((project, index) => {
-                        const position = positions[index % positions.length];
-                        const isActive = activeProject === index;
+                    <div className="ikigai-diagram-inner">
 
-                        return (
-                            <motion.line
-                                key={project.nombre}
-                                x1="50"
-                                y1="50"
-                                x2={position.x}
-                                y2={position.y}
-                                className="ikigai-project-line"
-                                animate={{
-                                    opacity: isActive ? 1 : 0.35,
-                                    strokeWidth: isActive ? 0.8 : 0.35,
-                                }}
-                                transition={{ duration: 0.25 }}
-                                stroke={isActive ? "#c084fc" : "#7c3aed"}
-                                markerEnd={
-                                    isActive
-                                        ? "url(#arrow-active)"
-                                        : "url(#arrow-normal)"
-                                }
-                                filter={isActive ? "url(#ikigai-glow)" : undefined}
-                            />
-                        );
-                    })}
-                </svg>
 
-                {/* =========================================================
-            DIAGRAMA IKIGAI
-        ========================================================= */}
+                        {/* =====================================
+                            LO QUE AMO
+                            ===================================== */}
 
-                <motion.div
-                    className="ikigai-diagram"
-                    animate={{
-                        scale: activeProject !== null ? 1.015 : 1,
-                    }}
-                    transition={{
-                        type: "spring",
-                        stiffness: 250,
-                        damping: 20,
-                    }}
-                >
-                    {/* Círculos principales */}
-
-                    <div className="ikigai-circle circle-love">
-                        <IkigaiSection
-                            title="Lo que amo"
+                        <MainCircle
+                            titlePrefix="Lo que"
+                            titleHighlight="AMO"
                             items={love}
-                            className="section-love"
+                            className="circle-love"
+                            color={sectionColors.love}
+                            active={
+                                activeSection === "love"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "love"
+                            )}
                         />
-                    </div>
 
-                    <div className="ikigai-circle circle-world">
-                        <IkigaiSection
-                            title="El mundo necesita"
+
+                        {/* =====================================
+                            EL MUNDO NECESITA
+                            ===================================== */}
+
+                        <MainCircle
+                            titlePrefix="El mundo"
+                            titleHighlight="NECESITA"
                             items={worldNeeds}
-                            className="section-world"
+                            className="circle-world"
+                            color={sectionColors.world}
+                            active={
+                                activeSection === "world"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "world"
+                            )}
                         />
-                    </div>
 
-                    <div className="ikigai-circle circle-good">
-                        <IkigaiSection
-                            title="Para lo que soy bueno"
+
+                        {/* =====================================
+                            EN LO QUE SOY BUENO
+                            ===================================== */}
+
+                        <MainCircle
+                            titlePrefix="En lo que soy"
+                            titleHighlight="BUENO"
                             items={goodAt}
-                            className="section-good"
+                            className="circle-good"
+                            color={sectionColors.goodAt}
+                            active={
+                                activeSection === "goodAt"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "goodAt"
+                            )}
                         />
-                    </div>
 
-                    <div className="ikigai-circle circle-paid">
-                        <IkigaiSection
-                            title="Por lo que pueden pagarme"
+
+                        {/* =====================================
+                            POR LO QUE ME PUEDEN PAGAR
+                            ===================================== */}
+
+                        <MainCircle
+                            titlePrefix="Por lo que me pueden"
+                            titleHighlight="PAGAR"
                             items={paidFor}
-                            className="section-paid"
+                            className="circle-paid"
+                            color={sectionColors.paidFor}
+                            active={
+                                activeSection === "paidFor"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "paidFor"
+                            )}
                         />
-                    </div>
 
-                    {/* Intersecciones */}
 
-                    <div className="ikigai-intersection intersection-mission">
-                        <strong>Misión</strong>
-                        <ListContent items={mission} />
-                    </div>
+                        {/* =====================================
+                            MISIÓN
+                            ===================================== */}
 
-                    <div className="ikigai-intersection intersection-vocation">
-                        <strong>Vocación</strong>
-                        <ListContent items={vocation} />
-                    </div>
+                        <Intersection
+                            title="Misión"
+                            items={mission}
+                            className="intersection-mission"
+                            active={
+                                activeSection === "mission"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "mission"
+                            )}
+                        />
 
-                    <div className="ikigai-intersection intersection-profession">
-                        <strong>Profesión</strong>
-                        <ListContent items={profession} />
-                    </div>
 
-                    <div className="ikigai-intersection intersection-passion">
-                        <strong>Pasión</strong>
-                        <ListContent items={passion} />
-                    </div>
+                        {/* =====================================
+                            VOCACIÓN
+                            ===================================== */}
 
-                    {/* Segunda capa */}
+                        <Intersection
+                            title="Vocación"
+                            items={vocation}
+                            className="intersection-vocation"
+                            active={
+                                activeSection === "vocation"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "vocation"
+                            )}
+                        />
 
-                    <div className="ikigai-small-label label-personality">
-                        <span>Personalidad</span>
 
-                        <ListContent items={personality} />
-                    </div>
+                        {/* =====================================
+                            PROFESIÓN
+                            ===================================== */}
 
-                    <div className="ikigai-small-label label-career">
-                        <span>Carrera</span>
+                        <Intersection
+                            title="Profesión"
+                            items={profession}
+                            className="intersection-profession"
+                            active={
+                                activeSection === "profession"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "profession"
+                            )}
+                        />
 
-                        <ListContent items={career} />
-                    </div>
 
-                    <div className="ikigai-small-label label-rarity">
-                        <span>Rareza</span>
+                        {/* =====================================
+                            PASIÓN
+                            ===================================== */}
 
-                        <ListContent items={rarity} />
-                    </div>
+                        <Intersection
+                            title="Pasión"
+                            items={passion}
+                            className="intersection-passion"
+                            active={
+                                activeSection === "passion"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "passion"
+                            )}
+                        />
 
-                    <div className="ikigai-small-label label-archetype">
-                        <span>Arquetipo</span>
 
-                        <ListContent items={archetype} />
-                    </div>
+                        {/* =====================================
+                            PERSONALIDAD
+                            ===================================== */}
 
-                    {/* Centro */}
+                        <SmallLabel
+                            title="Personalidad"
+                            items={personality}
+                            className="label-personality"
+                            active={
+                                activeSection ===
+                                "personality"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "personality"
+                            )}
+                        />
 
-                    <motion.div
-                        className={`ikigai-core ${activeProject !== null ? "is-active" : ""
-                            }`}
-                        animate={{
-                            scale: activeProject !== null ? 1.08 : 1,
-                        }}
-                        transition={{
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 18,
-                        }}
-                    >
-                        <span>IKIGAI</span>
-                    </motion.div>
-                </motion.div>
 
-                {/* =========================================================
-            PROYECTOS
-        ========================================================= */}
+                        {/* =====================================
+                            CARRERA
+                            ===================================== */}
 
-                {projects.map((project, index) => {
-                    const position = positions[index % positions.length];
-                    const isActive = activeProject === index;
+                        <SmallLabel
+                            title="Carrera"
+                            items={career}
+                            className="label-career"
+                            active={
+                                activeSection === "career"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "career"
+                            )}
+                        />
 
-                    return (
-                        <motion.div
-                            key={project.nombre}
-                            className={`ikigai-project ${isActive ? "is-active" : ""
-                                }`}
-                            style={{
-                                left: `${position.x}%`,
-                                top: `${position.y}%`,
-                            }}
-                            initial={{ opacity: 0, scale: 0.7 }}
-                            animate={{
-                                opacity: 1,
-                                scale: isActive ? 1.08 : 1,
-                            }}
-                            transition={{
-                                duration: 0.35,
-                                delay: index * 0.08,
-                            }}
-                            onMouseEnter={() => setActiveProject(index)}
-                            onMouseLeave={() => setActiveProject(null)}
+
+                        {/* =====================================
+                            RAREZA
+                            ===================================== */}
+
+                        <SmallLabel
+                            title="Rareza"
+                            items={rarity}
+                            className="label-rarity"
+                            active={
+                                activeSection === "rarity"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "rarity"
+                            )}
+                        />
+
+
+                        {/* =====================================
+                            ARQUETIPO
+                            ===================================== */}
+
+                        <SmallLabel
+                            title="Arquetipo"
+                            items={archetype}
+                            className="label-archetype"
+                            active={
+                                activeSection ===
+                                "archetype"
+                            }
+                            onMouseMove={handleSectionMouseMove(
+                                "archetype"
+                            )}
+                        />
+
+
+                        {/* =====================================
+                            IKIGAI CENTRAL
+                            ===================================== */}
+
+                        <div
+                            className="ikigai-core-wrapper"
+                            onMouseMove={handleSectionMouseMove(
+                                "ikigai"
+                            )}
                         >
-                            <div className="project-card">
-                                <span className="project-number">
-                                    0{index + 1}
+
+                            <motion.div
+                                className={`ikigai-core ${activeSection ===
+                                        "ikigai"
+                                        ? "is-active"
+                                        : ""
+                                    }`}
+                                animate={{
+                                    scale:
+                                        activeSection ===
+                                            "ikigai"
+                                            ? 1.07
+                                            : 1,
+                                }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 18,
+                                }}
+                            >
+
+                                <span>
+                                    IKIGAI
                                 </span>
 
-                                <h3>{project.nombre}</h3>
+                                <small>
+                                    Explorar
+                                </small>
 
-                                <div className="project-technologies">
-                                    {project.tecnologias.map((technology) => (
-                                        <span key={technology}>
-                                            {technology}
-                                        </span>
-                                    ))}
-                                </div>
+                            </motion.div>
 
-                                <AnimatePresence>
-                                    {isActive && (
-                                        <motion.div
-                                            className="project-description"
-                                            initial={{
-                                                opacity: 0,
-                                                height: 0,
-                                            }}
-                                            animate={{
-                                                opacity: 1,
-                                                height: "auto",
-                                            }}
-                                            exit={{
-                                                opacity: 0,
-                                                height: 0,
-                                            }}
-                                        >
-                                            {project.descripcion}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        </motion.div>
-                    );
-                })}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {/* =================================================
+                    TOOLTIP
+                    ================================================= */}
+
+                <AnimatePresence>
+                    {activeSectionData && (
+                        <DetailTooltip
+                            key={activeSection}
+                            title={
+                                activeSectionData.title
+                            }
+                            items={
+                                activeSectionData.items
+                            }
+                            color={
+                                activeSectionData.color
+                            }
+                            position={
+                                tooltipPosition
+                            }
+                        />
+                    )}
+                </AnimatePresence>
+
             </div>
+
         </section>
     );
 }

@@ -1,6 +1,7 @@
 import Ikigai from "./components/Ikigai/Ikigai";
 import Abstraccion from "./components/Abstraccion/Abstraccion";
 import DogSvg from "./components/Abstraccion/DogSvg";
+import "./App.css";
 
 import {
   ikigaiData,
