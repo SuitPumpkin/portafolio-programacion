@@ -110,15 +110,15 @@ export const ikigaiData = {
 
 export const projects = [
     {
-        titulo: "AutoTask",
+        titulo: "Gestor de proyectos creativos",
         descripcion:
-            "Herramienta de automatización de tareas repetitivas para ahorrar tiempo.",
+            "Una herramienta CRM opensource gratuita para moder gestionar negocios creativos de forma sencilla y sostenible. (ya comenzado en github)",
     },
 
     {
-        titulo: "PixelQuest",
+        titulo: "JuegoRandom",
         descripcion:
-            "Videojuego 2D que combina creatividad y lógica de programación.",
+            "Videojuego HD2D que combine mi experiencia en UNREAL y mis conocimientos para contar buenas historias.",
     },
 
     {
@@ -130,7 +130,7 @@ export const projects = [
     {
         titulo: "StoryForge",
         descripcion:
-            "Editor de historias interactivas con experiencias digitales creativas.",
+            "Editor de historias de manera que puedas seguir el hilo de tu propia historia (maybe con funciones de IA para corregir ortografia y detalles minimos.",
     },
 ];
 

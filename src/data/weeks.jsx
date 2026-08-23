@@ -12,9 +12,9 @@ export const weeks = [
   {
     id: "semana-1",
     number: "01",
-    title: "Fundamentos y Pensamiento Computacional",
+    title: "Tareas de la primer semana",
     description:
-      "Exploración personal, identificación de intereses y primeros acercamientos a la abstracción mediante objetos.",
+      "Ikigai con lista de proyectos para desarrolar, Abstracción, ... , Bases de datos con tablas primarias y tablas medias, Representación visual de la diferencia entre diferentes medidas digitales.",
     tasks: [
       {
         id: "ikigai",
