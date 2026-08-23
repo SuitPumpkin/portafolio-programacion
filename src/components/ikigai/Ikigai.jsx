@@ -1,782 +1,379 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as d3 from "d3";
 import { AnimatePresence, motion } from "motion/react";
 import "./Ikigai.css";
 
+const SIZE = 768;
+const RADIUS = 190;
+const DISTANCE = 120;
+const C = SIZE / 2;
 
-const sectionColors = {
-    love: "#ff3b5c",
-    world: "#3b82f6",
-    goodAt: "#ff9d00",
-    paidFor: "#22c55e",
+const ORDER = ["passion", "mission", "vocation", "profession"];
+const ORDER_INDEX = new Map(ORDER.map((id, i) => [id, i]));
+const makeId = (ids) =>
+  [...ids].sort((a, b) => ORDER_INDEX.get(a) - ORDER_INDEX.get(b)).join("-");
 
-    mission: "#a78bfa",
-    vocation: "#38bdf8",
-    profession: "#fbbf24",
-    passion: "#fb923c",
-
-    personality: "#f472b6",
-    career: "#60a5fa",
-    rarity: "#f59e0b",
-    archetype: "#4ade80",
-
-    ikigai: "#ffffff",
+const COLORS = {
+  passion: "#ff3b5c",
+  mission: "#3b82f6",
+  vocation: "#22c55e",
+  profession: "#ff9d00",
 };
 
+const OFFSETS = {
+  passion: [-DISTANCE, 0],
+  mission: [0, -DISTANCE],
+  vocation: [DISTANCE, 0],
+  profession: [0, DISTANCE],
+};
 
-/* =========================================================
-   TOOLTIP
-   ========================================================= */
+const BASE = ORDER.map((id) => ({
+  id,
+  cx: C + OFFSETS[id][0],
+  cy: C + OFFSETS[id][1],
+  color: COLORS[id],
+}));
 
-function DetailTooltip({
-    title,
-    items,
-    color,
-    position,
-}) {
-    return (
-        <motion.div
-            className="ikigai-tooltip"
-            style={{
-                left: position.x,
-                top: position.y,
-                "--accent-color": color,
-            }}
-            initial={{
-                opacity: 0,
-                scale: 0.96,
-                y: 8,
-            }}
-            animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-            }}
-            exit={{
-                opacity: 0,
-                scale: 0.96,
-                y: 8,
-            }}
-            transition={{
-                duration: 0.16,
-                ease: "easeOut",
-            }}
-        >
-            <div
-                className="ikigai-tooltip-arrow"
+const mixColors = (ids) => {
+  if (ids.length === 1) return COLORS[ids[0]];
+  if (ids.length === 4) return "#ffffff";
+  const rgb = ids.map((id) => d3.rgb(COLORS[id]));
+  return d3
+    .rgb(
+      d3.mean(rgb, (c) => c.r),
+      d3.mean(rgb, (c) => c.g),
+      d3.mean(rgb, (c) => c.b)
+    )
+    .formatHex();
+};
+
+const REGION_SETS = [
+  ["passion"],
+  ["mission"],
+  ["vocation"],
+  ["profession"],
+  ["passion", "mission"],
+  ["mission", "vocation"],
+  ["vocation", "profession"],
+  ["profession", "passion"],
+  ["passion", "mission", "profession"],
+  ["passion", "mission", "vocation"],
+  ["passion", "vocation", "profession"],
+  ["mission", "vocation", "profession"],
+  ["passion", "mission", "vocation", "profession"],
+];
+
+const META = {
+  passion: { title: "Lo que amo", prop: "love" },
+  mission: { title: "El mundo necesita", prop: "worldNeeds" },
+  vocation: { title: "Por lo que me pagan", prop: "paidFor" },
+  profession: { title: "En lo que soy bueno", prop: "goodAt" },
+  "passion-mission": { title: "Misión", prop: "mission" },
+  "mission-vocation": { title: "Vocación", prop: "vocation" },
+  "passion-profession": { title: "Profesión", prop: "profession" },
+  "vocation-profession": { title: "Pasión", prop: "passion" },
+  "passion-mission-profession": { title: "Rareza", prop: "rarity" },
+  "passion-mission-vocation": { title: "Carrera", prop: "career" },
+  "passion-vocation-profession": { title: "Tarea", prop: "personality" },
+  "mission-vocation-profession": { title: "Arquetipo", prop: "archetype" },
+  "passion-mission-vocation-profession": { title: "Mi Ikigai", prop: "ikigai" },
+};
+
+const REGIONS = REGION_SETS.map((circles) => {
+  const id = makeId(circles);
+  return { id, circles, color: mixColors(circles), ...META[id] };
+});
+
+const LABELS = [
+  { id: "passion", x: 150, y: 384, title: "AMOR" },
+  { id: "mission", x: 384, y: 170, title: "MUNDO" },
+  { id: "vocation", x: 625, y: 384, title: "PAGAN" },
+  { id: "profession", x: 384, y: 600, title: "BUENO" },
+  { id: "passion-mission", x: 280, y: 280, title: "Pasión" },
+  { id: "mission-vocation", x: 488, y: 280, title: "Misión" },
+  { id: "passion-profession", x: 280, y: 488, title: "Profesión" },
+  { id: "vocation-profession", x: 488, y: 488, title: "Vocación" },
+  { id: "passion-mission-profession", x: 280, y: 384, title: "Rareza", small: true },
+  { id: "passion-mission-vocation", x: 384, y: 280, title: "Carrera", small: true },
+  { id: "passion-vocation-profession", x: 384, y: 485, title: "Tarea", small: true },
+  { id: "mission-vocation-profession", x: 488, y: 384, title: "Arquetipo", small: true },
+  { id: "passion-mission-vocation-profession", x: 384, y: 384, title: "IKIGAI", subtitle: "Razón de ser", center: true },
+];
+
+const getMembership = (x, y, circles, radius) =>
+  circles
+    .filter((c) => {
+      const dx = x - c.cx;
+      const dy = y - c.cy;
+      return dx * dx + dy * dy <= radius * radius;
+    })
+    .map((c) => c.id)
+    .sort((a, b) => ORDER_INDEX.get(a) - ORDER_INDEX.get(b));
+
+const Ikigai = (props) => {
+  const svgRef = useRef(null);
+  const [activeRegion, setActiveRegion] = useState(null);
+  const [tooltip, setTooltip] = useState(null);
+
+  const dataMap = Object.fromEntries(
+    REGIONS.map((r) => [r.id, { ...META[r.id], color: r.color, items: props[META[r.id].prop] ?? [] }])
+  );
+
+  useEffect(() => {
+    const svgNode = svgRef.current;
+    if (!svgNode) return;
+
+    const svg = d3.select(svgNode);
+    svg.selectAll("*").remove();
+
+    const regionMap = new Map(REGIONS.map((r) => [r.id, r]));
+
+    svg
+      .attr("viewBox", `0 0 ${SIZE} ${SIZE}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const diagram = svg.append("g");
+
+    const circleEls = diagram
+      .append("g")
+      .selectAll("circle")
+      .data(BASE)
+      .join("circle")
+      .attr("cx", (d) => d.cx)
+      .attr("cy", (d) => d.cy)
+      .attr("r", 0)
+      .attr("fill", (d) => d.color)
+      .attr("fill-opacity", 0.5)
+      .attr("stroke", "rgba(255,255,255,0.8)")
+      .attr("stroke-width", 4)
+      .style("pointer-events", "none");
+
+    circleEls
+      .transition()
+      .delay((_, i) => i * 100)
+      .duration(700)
+      .ease(d3.easeBackOut.overshoot(1.15))
+      .attr("r", RADIUS);
+
+    const makeRegionImage = (region) => {
+      const canvas = document.createElement("canvas");
+      canvas.width = SIZE;
+      canvas.height = SIZE;
+      const ctx = canvas.getContext("2d");
+      const img = ctx.createImageData(SIZE, SIZE);
+      const px = img.data;
+      const color = d3.rgb(region.color);
+
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          const m = getMembership(x + 0.5, y + 0.5, BASE, RADIUS);
+          if (m.length === region.circles.length && m.every((id) => region.circles.includes(id))) {
+            const i = (y * SIZE + x) * 4;
+            px[i] = color.r;
+            px[i + 1] = color.g;
+            px[i + 2] = color.b;
+            px[i + 3] = 255;
+          }
+        }
+      }
+
+      ctx.putImageData(img, 0, 0);
+      return canvas.toDataURL("image/png");
+    };
+
+    const images = new Map(REGIONS.map((r) => [r.id, makeRegionImage(r)]));
+
+    const hoverLayer = diagram.append("g").style("pointer-events", "none");
+    let current = null;
+
+    const clear = () => {
+      current = null;
+      setActiveRegion(null);
+      setTooltip(null);
+      circleEls.interrupt().transition().duration(180).attr("fill-opacity", 0.5);
+      hoverLayer.selectAll("*").interrupt().transition().duration(120).attr("opacity", 0).remove();
+    };
+
+    const activate = (region, event) => {
+      current = region.id;
+      setActiveRegion(region.id);
+      setTooltip({ x: event.clientX, y: event.clientY });
+      circleEls.interrupt().transition().duration(180).attr("fill-opacity", 0.12);
+      hoverLayer.selectAll("*").remove();
+      const href = images.get(region.id);
+      if (!href) return;
+      hoverLayer
+        .append("image")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", SIZE)
+        .attr("height", SIZE)
+        .attr("preserveAspectRatio", "none")
+        .attr("href", href)
+        .attr("opacity", 0)
+        .transition()
+        .duration(160)
+        .attr("opacity", 1);
+    };
+
+    diagram
+      .append("rect")
+      .attr("width", SIZE)
+      .attr("height", SIZE)
+      .attr("fill", "transparent")
+      .style("cursor", "crosshair")
+      .on("mousemove", (event) => {
+        const rect = svgNode.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * SIZE;
+        const y = ((event.clientY - rect.top) / rect.height) * SIZE;
+        const m = getMembership(x, y, BASE, RADIUS);
+        if (!m.length) return clear();
+        const region = regionMap.get(makeId(m));
+        if (!region) return clear();
+        if (current !== region.id) activate(region, event);
+        else setTooltip({ x: event.clientX, y: event.clientY });
+      })
+      .on("mouseleave", clear);
+
+    diagram
+      .append("g")
+      .style("pointer-events", "none")
+      .selectAll("circle")
+      .data(BASE)
+      .join("circle")
+      .attr("cx", (d) => d.cx)
+      .attr("cy", (d) => d.cy)
+      .attr("r", RADIUS)
+      .attr("fill", "none")
+      .attr("stroke", "rgba(255,255,255,0.85)")
+      .attr("stroke-width", 4);
+
+    return () => svg.selectAll("*").remove();
+  }, []);
+
+  const onLabelEnter = (label, event) => {
+    if (!dataMap[label.id].items.length) return;
+    setActiveRegion(label.id);
+    setTooltip({ x: event.clientX, y: event.clientY });
+  };
+  const onLabelMove = (event) =>
+    setTooltip((p) => (p ? { ...p, x: event.clientX, y: event.clientY } : p));
+  const onLabelLeave = () => {
+    setActiveRegion(null);
+    setTooltip(null);
+  };
+
+  const activeData = activeRegion ? dataMap[activeRegion] : null;
+
+  return (
+    <section className="ikigai-container">
+      <div className="ikigai-header">
+        <span className="ikigai-eyebrow">EXPLORACIÓN PERSONAL</span>
+        <h2>Mi Ikigai</h2>
+        <p>
+          La intersección entre lo que amo, aquello en lo que soy bueno,
+          lo que el mundo necesita y aquello por lo que puedo aportar valor.
+        </p>
+      </div>
+
+      <div className="ikigai-stage">
+        <div className="ikigai-canvas">
+          <svg ref={svgRef} className="ikigai-svg" />
+
+          <div className="ikigai-label-layer">
+            {LABELS.map((label, index) => {
+              const isActive = activeRegion === label.id;
+              return (
+                <div
+                  key={label.id}
+                  className={[
+                    "ikigai-label-anchor",
+                    label.center ? "is-center" : "",
+                    label.small ? "is-small" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  style={{
+                    left: `${(label.x / SIZE) * 100}%`,
+                    top: `${(label.y / SIZE) * 100}%`,
+                  }}
+                  onMouseEnter={(e) => onLabelEnter(label, e)}
+                  onMouseMove={onLabelMove}
+                  onMouseLeave={onLabelLeave}
+                >
+                  <motion.div
+                    className="ikigai-label"
+                    initial={{ opacity: 0, scale: 0.7, y: 8 }}
+                    animate={{
+                      opacity: isActive ? 1 : 0.82,
+                      scale: isActive ? 1.08 : 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: 0.5 + index * 0.04,
+                      duration: 0.45,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <span className="ikigai-label-title">{label.title}</span>
+                    <span className="ikigai-label-subtitle">{label.subtitle}</span>
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+
+          <AnimatePresence>
+            {activeData && activeData.items.length > 0 && tooltip && (
+              <motion.div
+                className="ikigai-tooltip"
+                initial={{ opacity: 0, scale: 0.96, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 8 }}
+                transition={{ duration: 0.16 }}
                 style={{
-                    borderBottomColor: color,
+                  left: tooltip.x,
+                  top: tooltip.y,
+                  "--accent-color": activeData.color,
                 }}
-            />
-
-            <div className="ikigai-tooltip-header">
-                <span
+              >
+                <div className="ikigai-tooltip-header">
+                  <span
                     className="ikigai-tooltip-dot"
                     style={{
-                        backgroundColor: color,
-                        boxShadow: `0 0 14px ${color}`,
+                      background: activeData.color,
+                      boxShadow: `0 0 14px ${activeData.color}`,
                     }}
-                />
-
-                <div>
-                    <h4>{title}</h4>
-
+                  />
+                  <div>
+                    <h4>{activeData.title}</h4>
                     <span>
-                        {items.length}{" "}
-                        {items.length === 1
-                            ? "idea"
-                            : "ideas"}
+                      {activeData.items.length}{" "}
+                      {activeData.items.length === 1 ? "idea" : "ideas"}
                     </span>
+                  </div>
                 </div>
-            </div>
 
-            <div className="ikigai-tooltip-divider" />
+                <div className="ikigai-tooltip-divider" />
 
-            <ul>
-                {items.map((item, index) => (
+                <ul>
+                  {activeData.items.map((item, index) => (
                     <li key={`${item}-${index}`}>
-                        <span
-                            className="ikigai-tooltip-item-dot"
-                            style={{
-                                backgroundColor: color,
-                            }}
-                        />
-
-                        {item}
+                      <span
+                        className="ikigai-tooltip-item-dot"
+                        style={{ background: activeData.color }}
+                      />
+                      {item}
                     </li>
-                ))}
-            </ul>
-        </motion.div>
-    );
-}
-
-
-/* =========================================================
-   CÍRCULO PRINCIPAL
-   ========================================================= */
-
-function MainCircle({
-    titlePrefix,
-    titleHighlight,
-    items,
-    className,
-    color,
-    active,
-    onMouseMove,
-}) {
-    return (
-        <motion.div
-            className={`ikigai-circle ${className} ${active ? "is-active" : ""
-                }`}
-            animate={{
-                scale: active ? 1.015 : 1,
-            }}
-            transition={{
-                duration: 0.2,
-            }}
-            onMouseMove={onMouseMove}
-        >
-            <div className="ikigai-circle-content">
-                <div className="ikigai-circle-title">
-                    <span
-                        className="ikigai-circle-dot"
-                        style={{
-                            backgroundColor: color,
-                            boxShadow: `0 0 14px ${color}`,
-                        }}
-                    />
-
-                    <h3>
-                        <span>
-                            {titlePrefix}
-                        </span>
-
-                        <strong>
-                            {titleHighlight}
-                        </strong>
-                    </h3>
-                </div>
-
-                <span
-                    className="ikigai-circle-badge"
-                    style={{
-                        "--badge-color": color,
-                    }}
-                >
-                    {items.length} elementos
-                </span>
-            </div>
-        </motion.div>
-    );
-}
-
-
-/* =========================================================
-   INTERSECCIÓN
-   ========================================================= */
-
-function Intersection({
-    title,
-    items,
-    className,
-    active,
-    onMouseMove,
-}) {
-    return (
-        <div
-            className={`ikigai-intersection-wrapper ${className}`}
-            onMouseMove={onMouseMove}
-        >
-            <motion.div
-                className={`ikigai-intersection ${active ? "is-active" : ""
-                    }`}
-                animate={{
-                    scale: active ? 1.06 : 1,
-                }}
-                transition={{
-                    duration: 0.18,
-                }}
-            >
-                <strong>{title}</strong>
-
-                <span>
-                    {items.length} ideas
-                </span>
-            </motion.div>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-    );
-}
-
-
-/* =========================================================
-   LABEL DE INTERSECCIÓN TRIPLE
-   ========================================================= */
-
-function SmallLabel({
-    title,
-    items,
-    className,
-    active,
-    onMouseMove,
-}) {
-    return (
-        <div
-            className={`ikigai-small-label-wrapper ${className}`}
-            onMouseMove={onMouseMove}
-        >
-            <motion.div
-                className={`ikigai-small-label ${active ? "is-active" : ""
-                    }`}
-                animate={{
-                    scale: active ? 1.06 : 1,
-                }}
-                transition={{
-                    duration: 0.18,
-                }}
-            >
-                <span>{title}</span>
-
-                <small>
-                    {items.length} ideas
-                </small>
-            </motion.div>
-        </div>
-    );
-}
-
-
-/* =========================================================
-   COMPONENTE PRINCIPAL
-   ========================================================= */
-
-export default function Ikigai({
-    love = [],
-    goodAt = [],
-    worldNeeds = [],
-    paidFor = [],
-
-    mission = [],
-    profession = [],
-    passion = [],
-    vocation = [],
-
-    career = [],
-    rarity = [],
-    archetype = [],
-    personality = [],
-
-    ikigai = [],
-}) {
-    const [activeSection, setActiveSection] =
-        useState(null);
-
-    const [tooltipPosition, setTooltipPosition] =
-        useState({
-            x: 0,
-            y: 0,
-        });
-
-
-    /* =====================================================
-       DATOS
-       ===================================================== */
-
-    const sectionData = {
-        love: {
-            title: "Lo que amo",
-            items: love,
-            color: sectionColors.love,
-        },
-
-        world: {
-            title: "El mundo necesita",
-            items: worldNeeds,
-            color: sectionColors.world,
-        },
-
-        goodAt: {
-            title: "En lo que soy bueno",
-            items: goodAt,
-            color: sectionColors.goodAt,
-        },
-
-        paidFor: {
-            title: "Por lo que me pueden pagar",
-            items: paidFor,
-            color: sectionColors.paidFor,
-        },
-
-        mission: {
-            title: "Misión",
-            items: mission,
-            color: sectionColors.mission,
-        },
-
-        vocation: {
-            title: "Vocación",
-            items: vocation,
-            color: sectionColors.vocation,
-        },
-
-        profession: {
-            title: "Profesión",
-            items: profession,
-            color: sectionColors.profession,
-        },
-
-        passion: {
-            title: "Pasión",
-            items: passion,
-            color: sectionColors.passion,
-        },
-
-        personality: {
-            title: "Personalidad",
-            items: personality,
-            color: sectionColors.personality,
-        },
-
-        career: {
-            title: "Carrera",
-            items: career,
-            color: sectionColors.career,
-        },
-
-        rarity: {
-            title: "Rareza",
-            items: rarity,
-            color: sectionColors.rarity,
-        },
-
-        archetype: {
-            title: "Arquetipo",
-            items: archetype,
-            color: sectionColors.archetype,
-        },
-
-        ikigai: {
-            title: "Mi Ikigai",
-            items: ikigai,
-            color: sectionColors.ikigai,
-        },
-    };
-
-
-    const activeSectionData =
-        activeSection !== null
-            ? sectionData[activeSection]
-            : null;
-
-
-    /* =====================================================
-       MOUSE / TOOLTIP
-       ===================================================== */
-
-    const handleSectionMouseMove =
-        (section) => (event) => {
-            const stage =
-                event.currentTarget.closest(
-                    ".ikigai-stage"
-                );
-
-            if (!stage) {
-                return;
-            }
-
-            const stageRect =
-                stage.getBoundingClientRect();
-
-            const mouseX =
-                event.clientX - stageRect.left;
-
-            const mouseY =
-                event.clientY - stageRect.top;
-
-            const offsetX = 18;
-            const offsetY = 22;
-
-            const tooltipWidth = 370;
-            const tooltipHeight = 360;
-
-            let x =
-                mouseX + offsetX;
-
-            let y =
-                mouseY + offsetY;
-
-
-            if (
-                x + tooltipWidth >
-                stageRect.width - 16
-            ) {
-                x =
-                    mouseX -
-                    tooltipWidth -
-                    offsetX;
-            }
-
-
-            if (
-                y + tooltipHeight >
-                stageRect.height - 16
-            ) {
-                y =
-                    mouseY -
-                    tooltipHeight -
-                    offsetY;
-            }
-
-
-            x = Math.max(16, x);
-            y = Math.max(16, y);
-
-
-            setTooltipPosition({
-                x,
-                y,
-            });
-
-            setActiveSection(section);
-        };
-
-
-    const clearActiveState = () => {
-        setActiveSection(null);
-    };
-
-
-    /* =====================================================
-       RENDER
-       ===================================================== */
-
-    return (
-        <section className="ikigai-container">
-
-            {/* =================================================
-                HEADER
-                ================================================= */}
-
-            <header className="ikigai-header">
-
-                <span className="ikigai-eyebrow">
-                    EXPLORACIÓN PERSONAL
-                </span>
-
-                <h2>
-                    Mi Ikigai
-                </h2>
-
-                <p>
-                    La intersección entre lo que amo,
-                    aquello en lo que soy bueno,
-                    lo que el mundo necesita y aquello
-                    por lo que puedo aportar valor.
-                </p>
-
-            </header>
-
-
-            {/* =================================================
-                DIAGRAMA
-                ================================================= */}
-
-            <div
-                className="ikigai-stage"
-                onMouseLeave={clearActiveState}
-            >
-
-                <div className="ikigai-diagram">
-
-                    <div className="ikigai-diagram-inner">
-
-
-                        {/* =====================================
-                            LO QUE AMO
-                            ===================================== */}
-
-                        <MainCircle
-                            titlePrefix="Lo que"
-                            titleHighlight="AMO"
-                            items={love}
-                            className="circle-love"
-                            color={sectionColors.love}
-                            active={
-                                activeSection === "love"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "love"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            EL MUNDO NECESITA
-                            ===================================== */}
-
-                        <MainCircle
-                            titlePrefix="El mundo"
-                            titleHighlight="NECESITA"
-                            items={worldNeeds}
-                            className="circle-world"
-                            color={sectionColors.world}
-                            active={
-                                activeSection === "world"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "world"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            EN LO QUE SOY BUENO
-                            ===================================== */}
-
-                        <MainCircle
-                            titlePrefix="En lo que soy"
-                            titleHighlight="BUENO"
-                            items={goodAt}
-                            className="circle-good"
-                            color={sectionColors.goodAt}
-                            active={
-                                activeSection === "goodAt"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "goodAt"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            POR LO QUE ME PUEDEN PAGAR
-                            ===================================== */}
-
-                        <MainCircle
-                            titlePrefix="Por lo que me pueden"
-                            titleHighlight="PAGAR"
-                            items={paidFor}
-                            className="circle-paid"
-                            color={sectionColors.paidFor}
-                            active={
-                                activeSection === "paidFor"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "paidFor"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            MISIÓN
-                            ===================================== */}
-
-                        <Intersection
-                            title="Misión"
-                            items={mission}
-                            className="intersection-mission"
-                            active={
-                                activeSection === "mission"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "mission"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            VOCACIÓN
-                            ===================================== */}
-
-                        <Intersection
-                            title="Vocación"
-                            items={vocation}
-                            className="intersection-vocation"
-                            active={
-                                activeSection === "vocation"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "vocation"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            PROFESIÓN
-                            ===================================== */}
-
-                        <Intersection
-                            title="Profesión"
-                            items={profession}
-                            className="intersection-profession"
-                            active={
-                                activeSection === "profession"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "profession"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            PASIÓN
-                            ===================================== */}
-
-                        <Intersection
-                            title="Pasión"
-                            items={passion}
-                            className="intersection-passion"
-                            active={
-                                activeSection === "passion"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "passion"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            PERSONALIDAD
-                            ===================================== */}
-
-                        <SmallLabel
-                            title="Personalidad"
-                            items={personality}
-                            className="label-personality"
-                            active={
-                                activeSection ===
-                                "personality"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "personality"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            CARRERA
-                            ===================================== */}
-
-                        <SmallLabel
-                            title="Carrera"
-                            items={career}
-                            className="label-career"
-                            active={
-                                activeSection === "career"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "career"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            RAREZA
-                            ===================================== */}
-
-                        <SmallLabel
-                            title="Rareza"
-                            items={rarity}
-                            className="label-rarity"
-                            active={
-                                activeSection === "rarity"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "rarity"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            ARQUETIPO
-                            ===================================== */}
-
-                        <SmallLabel
-                            title="Arquetipo"
-                            items={archetype}
-                            className="label-archetype"
-                            active={
-                                activeSection ===
-                                "archetype"
-                            }
-                            onMouseMove={handleSectionMouseMove(
-                                "archetype"
-                            )}
-                        />
-
-
-                        {/* =====================================
-                            IKIGAI CENTRAL
-                            ===================================== */}
-
-                        <div
-                            className="ikigai-core-wrapper"
-                            onMouseMove={handleSectionMouseMove(
-                                "ikigai"
-                            )}
-                        >
-
-                            <motion.div
-                                className={`ikigai-core ${activeSection ===
-                                        "ikigai"
-                                        ? "is-active"
-                                        : ""
-                                    }`}
-                                animate={{
-                                    scale:
-                                        activeSection ===
-                                            "ikigai"
-                                            ? 1.07
-                                            : 1,
-                                }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 300,
-                                    damping: 18,
-                                }}
-                            >
-
-                                <span>
-                                    IKIGAI
-                                </span>
-
-                                <small>
-                                    Explorar
-                                </small>
-
-                            </motion.div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                {/* =================================================
-                    TOOLTIP
-                    ================================================= */}
-
-                <AnimatePresence>
-                    {activeSectionData && (
-                        <DetailTooltip
-                            key={activeSection}
-                            title={
-                                activeSectionData.title
-                            }
-                            items={
-                                activeSectionData.items
-                            }
-                            color={
-                                activeSectionData.color
-                            }
-                            position={
-                                tooltipPosition
-                            }
-                        />
-                    )}
-                </AnimatePresence>
-
-            </div>
-
-        </section>
-    );
-}
+      </div>
+    </section>
+  );
+};
+
+export default Ikigai;

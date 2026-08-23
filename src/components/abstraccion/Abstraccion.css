@@ -223,11 +223,10 @@
 
 .abstraction-object {
     position: absolute;
-    left: calc(50% - 115px);
-    top: 50%;
+    left: calc(50% - 110px);
+    top: calc(50% - 130px);
     width: 220px;
     height: 260px;
-    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -286,6 +285,6 @@
     }
 
     .abstraction-object {
-        left: calc(50% - 85px);
+        left: calc(50% - 110px);
     }
 }

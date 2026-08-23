@@ -128,6 +128,14 @@ export const ikigaiData = {
         "Perfeccionista",
     ],
 
+    task: [
+        "Crear soluciones que simplifiquen la vida",
+        "Automatizar procesos repetitivos",
+        "Desarrollar herramientas útiles",
+        "Convertir ideas en proyectos funcionales",
+        "Resolver problemas con tecnología",
+    ],
+
     ikigai: [
         "Resolver problemas mediante tecnología",
         "Simplificar y automatizar tareas",
