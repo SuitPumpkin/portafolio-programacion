@@ -93,7 +93,7 @@ const LABELS = [
   { id: "mission-vocation", x: 488, y: 280, title: "Misión" },
   { id: "passion-profession", x: 280, y: 488, title: "Profesión" },
   { id: "vocation-profession", x: 488, y: 488, title: "Vocación" },
-  { id: "passion-mission-profession", x: 280, y: 384, title: "Rareza", small: true },
+  { id: "passion-mission-profession", x: 270, y: 384, title: "Rareza", small: true },
   { id: "passion-mission-vocation", x: 384, y: 280, title: "Carrera", small: true },
   { id: "passion-vocation-profession", x: 384, y: 485, title: "Tarea", small: true },
   { id: "mission-vocation-profession", x: 488, y: 384, title: "Arquetipo", small: true },
@@ -112,11 +112,16 @@ const getMembership = (x, y, circles, radius) =>
 
 const Ikigai = (props) => {
   const svgRef = useRef(null);
+  const projects = props.projects ?? [];
+
   const [activeRegion, setActiveRegion] = useState(null);
   const [tooltip, setTooltip] = useState(null);
 
   const dataMap = Object.fromEntries(
-    REGIONS.map((r) => [r.id, { ...META[r.id], color: r.color, items: props[META[r.id].prop] ?? [] }])
+    REGIONS.map((r) => [
+      r.id,
+      { ...META[r.id], color: r.color, items: props[META[r.id].prop] ?? [] },
+    ])
   );
 
   useEffect(() => {
@@ -276,102 +281,127 @@ const Ikigai = (props) => {
         </p>
       </div>
 
-      <div className="ikigai-stage">
-        <div className="ikigai-canvas">
-          <svg ref={svgRef} className="ikigai-svg" />
+      <div className="ikigai-canvas">
+        <svg ref={svgRef} className="ikigai-svg" />
 
-          <div className="ikigai-label-layer">
-            {LABELS.map((label, index) => {
-              const isActive = activeRegion === label.id;
-              return (
-                <div
-                  key={label.id}
-                  className={[
-                    "ikigai-label-anchor",
-                    label.center ? "is-center" : "",
-                    label.small ? "is-small" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  style={{
-                    left: `${(label.x / SIZE) * 100}%`,
-                    top: `${(label.y / SIZE) * 100}%`,
+        <div className="ikigai-label-layer">
+          {LABELS.map((label, index) => {
+            const isActive = activeRegion === label.id;
+            return (
+              <div
+                key={label.id}
+                className={[
+                  "ikigai-label-anchor",
+                  label.center ? "is-center" : "",
+                  label.small ? "is-small" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                style={{
+                  left: `${(label.x / SIZE) * 100}%`,
+                  top: `${(label.y / SIZE) * 100}%`,
+                }}
+                onMouseEnter={(e) => onLabelEnter(label, e)}
+                onMouseMove={onLabelMove}
+                onMouseLeave={onLabelLeave}
+              >
+                <motion.div
+                  className="ikigai-label"
+                  initial={{ opacity: 0, scale: 0.7, y: 8 }}
+                  animate={{
+                    opacity: isActive ? 1 : 0.82,
+                    scale: isActive ? 1.08 : 1,
+                    y: 0,
                   }}
-                  onMouseEnter={(e) => onLabelEnter(label, e)}
-                  onMouseMove={onLabelMove}
-                  onMouseLeave={onLabelLeave}
+                  transition={{
+                    delay: 0.5 + index * 0.04,
+                    duration: 0.45,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
-                  <motion.div
-                    className="ikigai-label"
-                    initial={{ opacity: 0, scale: 0.7, y: 8 }}
-                    animate={{
-                      opacity: isActive ? 1 : 0.82,
-                      scale: isActive ? 1.08 : 1,
-                      y: 0,
-                    }}
-                    transition={{
-                      delay: 0.5 + index * 0.04,
-                      duration: 0.45,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <span className="ikigai-label-title">{label.title}</span>
-                    <span className="ikigai-label-subtitle">{label.subtitle}</span>
-                  </motion.div>
+                  <span className="ikigai-label-title">{label.title}</span>
+                  <span className="ikigai-label-subtitle">{label.subtitle}</span>
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
+
+        <AnimatePresence>
+          {activeData && activeData.items.length > 0 && tooltip && (
+            <motion.div
+              className="ikigai-tooltip"
+              initial={{ opacity: 0, scale: 0.96, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 8 }}
+              transition={{ duration: 0.16 }}
+              style={{
+                left: tooltip.x,
+                top: tooltip.y,
+                "--accent-color": activeData.color,
+              }}
+            >
+              <div className="ikigai-tooltip-header">
+                <span
+                  className="ikigai-tooltip-dot"
+                  style={{
+                    background: activeData.color,
+                    boxShadow: `0 0 14px ${activeData.color}`,
+                  }}
+                />
+                <div>
+                  <h4>{activeData.title}</h4>
+                  <span>
+                    {activeData.items.length}{" "}
+                    {activeData.items.length === 1 ? "idea" : "ideas"}
+                  </span>
                 </div>
-              );
-            })}
+              </div>
+
+              <div className="ikigai-tooltip-divider" />
+
+              <ul>
+                {activeData.items.map((item, index) => (
+                  <li key={`${item}-${index}`}>
+                    <span
+                      className="ikigai-tooltip-item-dot"
+                      style={{ background: activeData.color }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {projects.length > 0 && (
+        <div className="ikigai-projects">
+          <div className="ikigai-projects-title">
+            <span>03</span>
+            <h3>Proyectos</h3>
           </div>
 
-          <AnimatePresence>
-            {activeData && activeData.items.length > 0 && tooltip && (
+          <div className="ikigai-projects-list">
+            {projects.map((project, index) => (
               <motion.div
-                className="ikigai-tooltip"
-                initial={{ opacity: 0, scale: 0.96, y: 8 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: 8 }}
-                transition={{ duration: 0.16 }}
-                style={{
-                  left: tooltip.x,
-                  top: tooltip.y,
-                  "--accent-color": activeData.color,
-                }}
+                key={project.titulo}
+                className="ikigai-project"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + index * 0.08, duration: 0.4 }}
               >
-                <div className="ikigai-tooltip-header">
-                  <span
-                    className="ikigai-tooltip-dot"
-                    style={{
-                      background: activeData.color,
-                      boxShadow: `0 0 14px ${activeData.color}`,
-                    }}
-                  />
-                  <div>
-                    <h4>{activeData.title}</h4>
-                    <span>
-                      {activeData.items.length}{" "}
-                      {activeData.items.length === 1 ? "idea" : "ideas"}
-                    </span>
-                  </div>
+                <span className="ikigai-project-dot" />
+                <div>
+                  <h4>{project.titulo}</h4>
+                  <p>{project.descripcion}</p>
                 </div>
-
-                <div className="ikigai-tooltip-divider" />
-
-                <ul>
-                  {activeData.items.map((item, index) => (
-                    <li key={`${item}-${index}`}>
-                      <span
-                        className="ikigai-tooltip-item-dot"
-                        style={{ background: activeData.color }}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
               </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

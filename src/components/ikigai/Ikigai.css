@@ -47,20 +47,12 @@
   line-height: 1.65;
 }
 
-.ikigai-stage {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  isolation: isolate;
-}
-
-/* Unico elemento que define el tamano visual del Ikigai */
+/* Unico elemento que define el tamano visual del Ikigai. */
 .ikigai-canvas {
   position: relative;
   width: min(768px, calc(100vw - 2rem));
   aspect-ratio: 1 / 1;
-  flex-shrink: 0;
+  margin: 0 auto;
 }
 
 .ikigai-svg {
@@ -239,6 +231,90 @@
   border-radius: 50%;
 }
 
+.ikigai-projects {
+  width: min(1100px, 100%);
+  margin: 2.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ikigai-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.ikigai-projects-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.ikigai-projects-title span {
+  color: #a78bfa;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.ikigai-projects-title h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.ikigai-project {
+  display: flex;
+  gap: 0.75rem;
+  width: 260px;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(14, 23, 38, 0.6);
+  backdrop-filter: blur(6px);
+  cursor: default;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.ikigai-project:hover {
+  border-color: rgba(167, 139, 250, 0.6);
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.18);
+  transform: translateY(-5px);
+}
+
+.ikigai-project-dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+  background: #a78bfa;
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.7);
+}
+
+.ikigai-project h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.ikigai-project p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 600px) {
   .ikigai-container {
     padding: 3rem 0.5rem 2rem;
@@ -286,7 +362,20 @@
     font-size: 0.85rem;
   }
 
-  .ikigai-label-anchor.is-center .ikigai-label-subtitle {
-    font-size: 0.35rem;
+  .ikigai-project {
+    width: 200px;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .ikigai-project h4 {
+    font-size: 0.8rem;
+  }
+
+  .ikigai-project p {
+    font-size: 0.68rem;
+  }
+
+  .ikigai-projects-title h3 {
+    font-size: 1rem;
   }
 }
