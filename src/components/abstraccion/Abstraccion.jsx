@@ -7,13 +7,10 @@ function useTypewriter(text, active, speed = 25) {
 
     useEffect(() => {
         if (!active) {
-            setDisplayedText("");
             return;
         }
 
         let index = 0;
-
-        setDisplayedText("");
 
         const interval = setInterval(() => {
             index++;

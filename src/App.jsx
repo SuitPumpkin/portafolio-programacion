@@ -1,30 +1,15 @@
-import Ikigai from "./components/Ikigai/Ikigai";
-import Abstraccion from "./components/Abstraccion/Abstraccion";
-import DogSvg from "./components/Abstraccion/DogSvg";
+import WeekNav from "./components/WeekNav";
+import WeekSection from "./components/WeekSection";
 import "./App.css";
-
-import {
-  ikigaiData,
-  projects,
-  perroProperties,
-  perroMethods,
-} from "./data/week01";
+import { weeks } from "./data/weeks";
 
 function App() {
   return (
-    <main>
-      <Ikigai
-        {...ikigaiData}
-        projects={projects}
-      />
-
-      <Abstraccion
-        titulo="Abstracción: El perro"
-        descripcion="Representación visual de las propiedades y métodos que forman parte de un objeto."
-        svg={<DogSvg />}
-        propiedades={perroProperties}
-        metodos={perroMethods}
-      />
+    <main className="app">
+      <WeekNav weeks={weeks} />
+      {weeks.map((week) => (
+        <WeekSection key={week.id} week={week} />
+      ))}
     </main>
   );
 }
