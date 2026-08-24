@@ -1,18 +1,28 @@
 .abstraction-container {
     width: 100%;
-    padding: 6rem 1.5rem;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 1.5rem);
+
+    box-sizing: border-box;
     background: #060b16;
 }
 
 .abstraction-header {
+    width: 100%;
     max-width: 700px;
+    min-width: 0;
+
     margin: 0 auto 4rem;
     text-align: center;
 }
 
 .abstraction-eyebrow {
     display: inline-block;
+
     margin-bottom: 0.75rem;
+
     color: #8b5cf6;
     font-size: 0.7rem;
     font-weight: 800;
@@ -21,30 +31,66 @@
 
 .abstraction-header h2 {
     margin: 0;
+
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
     letter-spacing: -0.05em;
+
     color: #f8fafc;
 }
 
 .abstraction-header p {
     margin-top: 1rem;
+
     color: #a6afbd;
     line-height: 1.7;
+
+    overflow-wrap: anywhere;
 }
+
 
 .abstraction-scroll {
     width: 100%;
-    overflow: hidden;
-    padding: 2rem 0 3rem;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 3rem 0 4rem;
+
+    height: calc(var(--stage-height) + 7rem);
+
+    box-sizing: border-box;
+
+    overflow-x: clip;
+    overflow-y: visible;
+
+    position: relative;
+}
+
+.abstraction-stage-frame {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    height: var(--stage-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow: visible;
 }
 
 .abstraction-stage {
     position: relative;
-    width: min(1100px, 100%);
-    min-width: 900px;
+    width: 1100px;
+    min-width: 1100px;
+    flex: 0 0 1100px;
+
     height: 520px;
-    margin: 0 auto;
+    margin: 0;
+
     transform-origin: top center;
     will-change: transform;
 }
@@ -52,17 +98,25 @@
 .abstraction-lines {
     position: absolute;
     inset: 0;
+
     width: 100%;
     height: 100%;
+
     pointer-events: none;
     z-index: 1;
+
+    overflow: visible;
 }
 
 .abstraction-column {
     position: absolute;
+
     top: 0;
     bottom: 0;
+
     width: 32%;
+    min-width: 0;
+
     z-index: 5;
 }
 
@@ -76,10 +130,15 @@
 
 .column-label {
     position: absolute;
-    top: -1rem;
+    top: -2rem;
+
     display: flex;
     align-items: center;
     gap: 0.6rem;
+
+    white-space: nowrap;
+
+    z-index: 20;
 }
 
 .properties-column .column-label {
@@ -92,38 +151,60 @@
 
 .column-label span {
     display: flex;
+
     width: 28px;
     height: 28px;
+
+    flex-shrink: 0;
+
     align-items: center;
     justify-content: center;
+
     border-radius: 50%;
+
     background: #18181b;
     color: white;
+
     font-size: 0.65rem;
     font-weight: 800;
 }
 
 .column-label h3 {
     margin: 0;
+
     color: #e4e4e7;
+
     font-size: 0.9rem;
 }
 
 .node-position {
     position: absolute;
+
     width: 100%;
+    min-width: 0;
+
     transform: translateY(-50%);
 }
 
 .abstraction-node {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
     padding: 0.85rem 1rem;
+
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
+
     background: rgba(20, 25, 40, 0.85);
     color: #f8fafc;
+
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+
     cursor: pointer;
+
     transition:
         border-color 0.25s ease,
         box-shadow 0.25s ease;
@@ -139,6 +220,7 @@
 
 .abstraction-node.is-active {
     border-color: #a855f7;
+
     box-shadow:
         0 0 0 4px rgba(168, 85, 247, 0.1),
         0 15px 35px rgba(168, 85, 247, 0.14);
@@ -146,11 +228,21 @@
 
 .node-title {
     display: flex;
+
+    min-width: 0;
+
     align-items: center;
     gap: 0.55rem;
+
     color: #f8fafc;
+
     font-size: 0.9rem;
     font-weight: 800;
+}
+
+.node-title>span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .node-left .node-title {
@@ -160,39 +252,69 @@
 .node-dot {
     width: 8px;
     height: 8px;
+
     flex-shrink: 0;
+
     border-radius: 50%;
+
     background: #a855f7;
+
     box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
 }
 
 .abstraction-code {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
     margin-top: 0.75rem;
+
     overflow: hidden;
+
     border-radius: 10px;
+
     background: #18181b;
     color: #e4e4e7;
+
     text-align: left;
 }
 
 .code-header {
     display: flex;
+
+    min-width: 0;
+
     align-items: center;
     gap: 0.3rem;
+
     padding: 0.5rem 0.65rem;
+
     background: #27272a;
 }
 
 .code-header>span {
     width: 7px;
     height: 7px;
+
+    flex-shrink: 0;
+
     border-radius: 50%;
+
     background: #71717a;
 }
 
 .code-header label {
+    min-width: 0;
+
     margin-left: auto;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     color: #a1a1aa;
+
     font-family: monospace;
     font-size: 0.55rem;
 }
@@ -200,21 +322,32 @@
 .abstraction-code pre {
     margin: 0;
     padding: 0.8rem;
-    overflow-x: auto;
+
+    overflow: hidden;
+
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .abstraction-code code {
+    display: block;
+
     font-family:
         "JetBrains Mono",
         "Fira Code",
         monospace;
+
     font-size: 0.65rem;
     line-height: 1.6;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .typing-cursor {
     color: #c084fc;
+
     animation: cursor-blink 0.8s infinite;
 }
 
@@ -226,40 +359,58 @@
 
 .abstraction-object {
     position: absolute;
+
     left: calc(50% - 110px);
     top: calc(50% - 130px);
+
     width: 220px;
     height: 260px;
+
     display: flex;
+
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     z-index: 10;
 }
 
 .object-glow {
     position: absolute;
+
     width: 190px;
     height: 190px;
+
     border-radius: 50%;
+
     background:
         radial-gradient(circle,
             rgba(168, 85, 247, 0.2),
             transparent 70%);
+
     filter: blur(12px);
 }
 
 .object-svg {
     position: relative;
+
     width: 160px;
     height: 160px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     padding: 1rem;
+
+    box-sizing: border-box;
+
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 40px;
+
     background: rgba(20, 25, 40, 0.9);
+
     box-shadow:
         0 20px 50px rgba(0, 0, 0, 0.5);
 }
@@ -271,23 +422,38 @@
 
 .object-name {
     position: relative;
+
     margin-top: 1rem;
     padding: 0.4rem 0.8rem;
+
     border-radius: 999px;
+
     background: #18181b;
     color: white;
+
     font-size: 0.6rem;
     font-weight: 800;
     letter-spacing: 0.15em;
 }
 
-@media (max-width: 900px) {
-    .abstraction-stage {
-        min-width: 850px;
-        height: 520px;
+@media (max-width: 640px) {
+    .abstraction-container {
+        padding:
+            3rem 0.75rem;
     }
 
-    .abstraction-object {
-        left: calc(50% - 110px);
+    .abstraction-header {
+        margin-bottom: 3rem;
+    }
+
+    .abstraction-header h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .abstraction-scroll {
+        padding-top: 2.5rem;
+        padding-bottom: 3rem;
+
+        height: calc(var(--stage-height) + 5.5rem);
     }
 }

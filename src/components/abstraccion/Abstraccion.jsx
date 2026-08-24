@@ -8,6 +8,7 @@ function useTypewriter(text, active, speed = 25) {
 
     useEffect(() => {
         if (!active) {
+            setDisplayedText("");
             return;
         }
 
@@ -79,8 +80,8 @@ function AbstractionNode({
     return (
         <motion.div
             className={`abstraction-node ${side === "left"
-                ? "node-left"
-                : "node-right"
+                    ? "node-left"
+                    : "node-right"
                 } ${active ? "is-active" : ""}`}
             animate={{
                 scale: active ? 1.05 : 1,
@@ -101,7 +102,9 @@ function AbstractionNode({
 
             <AnimatePresence>
                 {active && (
-                    <CodePreview code={item.ejemplificacion} />
+                    <CodePreview
+                        code={item.ejemplificacion}
+                    />
                 )}
             </AnimatePresence>
         </motion.div>
@@ -116,9 +119,18 @@ export default function Abstraccion({
     metodos = [],
 }) {
     const [active, setActive] = useState(null);
+
     const scrollRef = useRef(null);
     const stageRef = useRef(null);
-    const scale = useFitScale(stageRef, scrollRef, { minScale: 0.4, maxScale: 1 });
+
+    const scale = useFitScale(
+        stageRef,
+        scrollRef,
+        {
+            minScale: 0.4,
+            maxScale: 1,
+        }
+    );
 
     const maxItems = Math.max(
         propiedades.length,
@@ -133,20 +145,15 @@ export default function Abstraccion({
 
     const getY = (index) => {
         return (
-            ((index + 0.5) / maxItems) *
-            100
+            ((index + 0.5) / maxItems) * 100
         );
     };
 
-    const activeType =
-        active?.type ?? null;
-
-    const activeIndex =
-        active?.index ?? null;
+    const activeType = active?.type ?? null;
+    const activeIndex = active?.index ?? null;
 
     return (
         <section className="abstraction-container">
-
             <div className="abstraction-header">
                 <span className="abstraction-eyebrow">
                     PROGRAMACIÓN ORIENTADA A OBJETOS
@@ -162,123 +169,127 @@ export default function Abstraccion({
             <div
                 ref={scrollRef}
                 className="abstraction-scroll"
-                style={{ height: `${stageHeight * scale + 80}px` }}
+                style={{
+                    "--stage-height": `${stageHeight * scale}px`,
+                }}
             >
-                <div
-                    ref={stageRef}
-                    className="abstraction-stage"
-                    style={{
-                        height: `${stageHeight}px`,
-                        transform: `scale(${scale})`,
-                        transformOrigin: "top center",
-                        margin: "0 auto",
-                    }}
-                >
-
-                    <svg
-                        className="abstraction-lines"
-                        viewBox="0 0 100 100"
-                        preserveAspectRatio="none"
+                <div className="abstraction-stage-frame">
+                    <div
+                        ref={stageRef}
+                        className="abstraction-stage"
+                        style={{
+                            height: `${stageHeight}px`,
+                            transform: `scale(${scale})`,
+                            transformOrigin: "top center",
+                        }}
                     >
-                        <defs>
-                            <filter id="abstraction-glow">
-                                <feGaussianBlur
-                                    stdDeviation="0.7"
-                                    result="blur"
-                                />
+                        <svg
+                            className="abstraction-lines"
+                            viewBox="0 0 100 100"
+                            preserveAspectRatio="none"
+                        >
+                            <defs>
+                                <filter id="abstraction-glow">
+                                    <feGaussianBlur
+                                        stdDeviation="0.7"
+                                        result="blur"
+                                    />
 
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
 
-                        {propiedades.map((item, index) => {
-                            const isActive =
-                                activeType === "property" &&
-                                activeIndex === index;
+                            {propiedades.map((item, index) => {
+                                const isActive =
+                                    activeType === "property" &&
+                                    activeIndex === index;
 
-                            return (
-                                <motion.line
-                                    key={`property-line-${index}`}
-                                    x1="31"
-                                    y1={getY(index)}
-                                    x2="46"
-                                    y2="50"
-                                    stroke={
-                                        isActive
-                                            ? "#a855f7"
-                                            : "#d4d4d8"
-                                    }
-                                    strokeWidth={
-                                        isActive ? "0.7" : "0.35"
-                                    }
-                                    strokeLinecap="round"
-                                    initial={{
-                                        opacity: 0.3,
-                                    }}
-                                    animate={{
-                                        opacity: isActive
-                                            ? 1
-                                            : 0.3,
-                                    }}
-                                    filter={
-                                        isActive
-                                            ? "url(#abstraction-glow)"
-                                            : undefined
-                                    }
-                                />
-                            );
-                        })}
+                                return (
+                                    <motion.line
+                                        key={`property-line-${index}`}
+                                        x1="31"
+                                        y1={getY(index)}
+                                        x2="46"
+                                        y2="50"
+                                        stroke={
+                                            isActive
+                                                ? "#a855f7"
+                                                : "#d4d4d8"
+                                        }
+                                        strokeWidth={
+                                            isActive
+                                                ? "0.7"
+                                                : "0.35"
+                                        }
+                                        strokeLinecap="round"
+                                        initial={{
+                                            opacity: 0.3,
+                                        }}
+                                        animate={{
+                                            opacity: isActive
+                                                ? 1
+                                                : 0.3,
+                                        }}
+                                        filter={
+                                            isActive
+                                                ? "url(#abstraction-glow)"
+                                                : undefined
+                                        }
+                                    />
+                                );
+                            })}
 
-                        {metodos.map((item, index) => {
-                            const isActive =
-                                activeType === "method" &&
-                                activeIndex === index;
+                            {metodos.map((item, index) => {
+                                const isActive =
+                                    activeType === "method" &&
+                                    activeIndex === index;
 
-                            return (
-                                <motion.line
-                                    key={`method-line-${index}`}
-                                    x1="69"
-                                    y1={getY(index)}
-                                    x2="54"
-                                    y2="50"
-                                    stroke={
-                                        isActive
-                                            ? "#a855f7"
-                                            : "#d4d4d8"
-                                    }
-                                    strokeWidth={
-                                        isActive ? "0.7" : "0.35"
-                                    }
-                                    strokeLinecap="round"
-                                    initial={{
-                                        opacity: 0.3,
-                                    }}
-                                    animate={{
-                                        opacity: isActive
-                                            ? 1
-                                            : 0.3,
-                                    }}
-                                    filter={
-                                        isActive
-                                            ? "url(#abstraction-glow)"
-                                            : undefined
-                                    }
-                                />
-                            );
-                        })}
-                    </svg>
+                                return (
+                                    <motion.line
+                                        key={`method-line-${index}`}
+                                        x1="69"
+                                        y1={getY(index)}
+                                        x2="54"
+                                        y2="50"
+                                        stroke={
+                                            isActive
+                                                ? "#a855f7"
+                                                : "#d4d4d8"
+                                        }
+                                        strokeWidth={
+                                            isActive
+                                                ? "0.7"
+                                                : "0.35"
+                                        }
+                                        strokeLinecap="round"
+                                        initial={{
+                                            opacity: 0.3,
+                                        }}
+                                        animate={{
+                                            opacity: isActive
+                                                ? 1
+                                                : 0.3,
+                                        }}
+                                        filter={
+                                            isActive
+                                                ? "url(#abstraction-glow)"
+                                                : undefined
+                                        }
+                                    />
+                                );
+                            })}
+                        </svg>
 
-                    <div className="abstraction-column properties-column">
-                        <div className="column-label">
-                            <span>01</span>
-                            <h3>Propiedades</h3>
-                        </div>
+                        <div className="abstraction-column properties-column">
+                            <div className="column-label">
+                                <span>01</span>
+                                <h3>Propiedades</h3>
+                            </div>
 
-                        {propiedades.map(
-                            (item, index) => (
+                            {propiedades.map((item, index) => (
                                 <div
                                     key={item.titulo}
                                     className="node-position"
@@ -290,8 +301,7 @@ export default function Abstraccion({
                                         item={item}
                                         side="left"
                                         active={
-                                            activeType ===
-                                            "property" &&
+                                            activeType === "property" &&
                                             activeIndex === index
                                         }
                                         onEnter={() =>
@@ -305,51 +315,49 @@ export default function Abstraccion({
                                         }
                                     />
                                 </div>
-                            )
-                        )}
-                    </div>
-
-                    <motion.div
-                        className="abstraction-object"
-                        animate={
-                            active
-                                ? {
-                                    rotate: [
-                                        0,
-                                        -1.5,
-                                        1.5,
-                                        -1,
-                                        0,
-                                    ],
-                                }
-                                : {
-                                    rotate: 0,
-                                }
-                        }
-                        transition={{
-                            duration: 0.45,
-                            repeat: active ? 1 : 0,
-                        }}
-                    >
-                        <div className="object-glow" />
-
-                        <div className="object-svg">
-                            {svg}
+                            ))}
                         </div>
 
-                        <span className="object-name">
-                            OBJETO
-                        </span>
-                    </motion.div>
+                        <motion.div
+                            className="abstraction-object"
+                            animate={
+                                active
+                                    ? {
+                                        rotate: [
+                                            0,
+                                            -1.5,
+                                            1.5,
+                                            -1,
+                                            0,
+                                        ],
+                                    }
+                                    : {
+                                        rotate: 0,
+                                    }
+                            }
+                            transition={{
+                                duration: 0.45,
+                                repeat: active ? 1 : 0,
+                            }}
+                        >
+                            <div className="object-glow" />
 
-                    <div className="abstraction-column methods-column">
-                        <div className="column-label">
-                            <span>02</span>
-                            <h3>Métodos</h3>
-                        </div>
+                            <div className="object-svg">
+                                {svg}
+                            </div>
 
-                        {metodos.map(
-                            (item, index) => (
+                            <span className="object-name">
+                                OBJETO
+                            </span>
+                        </motion.div>
+
+                        <div className="abstraction-column methods-column">
+                            <div className="column-label">
+                                <span>02</span>
+                                <h3>Métodos</h3>
+                            </div>
+
+                            {metodos.map((item, index) => (
                                 <div
                                     key={item.titulo}
                                     className="node-position"
@@ -375,8 +383,8 @@ export default function Abstraccion({
                                         }
                                     />
                                 </div>
-                            )
-                        )}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
