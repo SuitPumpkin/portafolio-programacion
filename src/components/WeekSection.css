@@ -1,12 +1,21 @@
 .week-section {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   padding: 6rem 0 4rem;
+  box-sizing: border-box;
 }
 
 .week-section-inner {
+  width: 100%;
   max-width: 1200px;
+  min-width: 0;
+
   margin: 0 auto;
   padding: 0 1.5rem;
+
+  box-sizing: border-box;
 }
 
 .week-header {
@@ -57,19 +66,24 @@
   line-height: 1.65;
 }
 
+.week-showcase,
+.week-showcase-viewport,
+.week-showcase-slide {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 .week-showcase {
   position: relative;
-  width: 100%;
 }
 
 .week-showcase-viewport {
-  width: 100%;
   position: relative;
 }
 
 .week-showcase-slide {
   display: none;
-  width: 100%;
 }
 
 .week-showcase-slide.is-active {

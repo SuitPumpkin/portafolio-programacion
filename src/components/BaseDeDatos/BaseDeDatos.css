@@ -1,6 +1,11 @@
 .db-container {
   width: 100%;
-  padding: 5rem 1.5rem;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 3vw, 1.5rem);
+
   background: #060b16;
   color: #f8fafc;
 }
@@ -45,11 +50,6 @@
   color: #fbbf24;
 }
 
-.db-body {
-  max-width: 100%;
-  margin: 0 auto;
-}
-
 .db-loading,
 .db-error {
   text-align: center;
@@ -60,18 +60,6 @@
 
 .db-error {
   color: #f87171;
-}
-
-.db-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  min-width: 0;
-}
-
-.db-table-section {
-  width: 100%;
-  min-width: 0;
 }
 
 .excel-toolbar {
@@ -127,15 +115,27 @@
   font-weight: 800;
 }
 
+.excel-search {
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
 .excel-search-input {
+  width: 100%;
+  max-width: 320px;
+  min-width: 0;
+
+  box-sizing: border-box;
+
   padding: 0.5rem 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+
   background: rgba(20, 25, 40, 0.6);
   color: #f8fafc;
+
   font-size: 0.85rem;
   outline: none;
-  min-width: 200px;
 }
 
 .excel-search-input::placeholder {
@@ -154,11 +154,17 @@
 }
 
 .excel-table-wrapper {
+  width: 100%;
+  max-width: 100%;
   max-height: 520px;
+
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .excel-table {
+  width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -262,8 +268,18 @@
   font-weight: 600;
 }
 
-.db-relations-section {
-  width: 100%;
+.db-body {
+  margin: 0 auto;
+}
+
+.db-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.db-table-section {
+  min-width: 0;
 }
 
 .relations-title {
@@ -276,7 +292,7 @@
 
 .relations-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -287,6 +303,7 @@
   background: rgba(20, 25, 40, 0.7);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
 }
 
 .relation-card:hover {
@@ -324,6 +341,7 @@
   font-weight: 600;
   opacity: 0.8;
   font-style: italic;
+  overflow-wrap: anywhere;
 }
 
 .relation-fields {
@@ -340,6 +358,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .relation-fields li::before {
@@ -411,25 +431,28 @@
 
 @media (max-width: 1024px) {
   .relations-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   .relations-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
+}
 
+@media (max-width: 768px) {
   .excel-toolbar {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .excel-search-input {
-    min-width: 100%;
+  .excel-search {
+    width: 100%;
   }
 
-  .db-container {
-    padding: 3rem 1rem;
+  .excel-search-input {
+    width: 100%;
+    max-width: none;
   }
 }

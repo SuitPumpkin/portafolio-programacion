@@ -42,10 +42,7 @@ function TableView({ sheets }) {
   }, [activeSheet, searchTerm, sheets]);
 
   const active = sheets[activeSheet];
-  const pkWidth = 50;
-  const dataWidth = 90;
-  const colCount = active.headers.length;
-  const tableWidth = pkWidth + dataWidth * (colCount - 1);
+  const colWidth = `${100 / active.headers.length}%`;
 
   const tables = [
     {
@@ -110,10 +107,13 @@ function TableView({ sheets }) {
 
         <div className="excel-sheet-container">
           <div className="excel-table-wrapper">
-            <table className="excel-table" style={{ width: tableWidth }}>
+            <table className="excel-table">
               <colgroup>
                 {active.headers.map((_, idx) => (
-                  <col key={idx} style={{ width: idx === 0 ? pkWidth : dataWidth }} />
+                  <col
+                    key={idx}
+                    style={{ width: colWidth }}
+                  />
                 ))}
               </colgroup>
               <thead>
@@ -155,7 +155,7 @@ function TableView({ sheets }) {
       </div>
 
       <div className="db-relations-section">
-        <h3 className="relations-title">Relaciones</h3>
+        <h3 className="relations-title">Entidades</h3>
         <div className="relations-grid">
           {tables.map((table) => (
             <div key={table.name} className="relation-card" style={{ borderColor: table.color }}>
@@ -234,7 +234,7 @@ export default function BaseDeDatos() {
         <span className="db-eyebrow">BASE DE DATOS</span>
         <h2>Tienda en Linea</h2>
         <p>
-          Entidades: cliente, producto, pedido, detallePedido | 200 registros
+          Tablas: cliente, producto, pedido, detallePedido | 200 registros
           {" "}
           <a href="/tienda-online.xlsx" download className="db-download-link">
             (descargar Excel)
