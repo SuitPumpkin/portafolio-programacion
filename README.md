@@ -7,7 +7,11 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 ### Semana 01 — Tareas de la primer semana
 
 - **Mi Ikigai**: Diagrama de Venn interactivo construido con D3.js que visualiza las 4 dimensiones del Ikigai (lo que amas, lo que se te da bien, lo que el mundo necesita, y por lo que te pagan). Incluye tooltips animados al pasar el cursor y una sección de proyectos personales inspirados en el concepto.
+<img width="800" height="430" alt="ikigai" src="https://github.com/user-attachments/assets/b5c0d597-5c37-4943-97d7-6ee8f4e46c30" />
+
 - **Abstracción: El perro**: Visualización interactiva del concepto de abstracción en programación orientada a objetos, representado mediante un objeto `perro` con propiedades (`nombre`, `edad`, `raza`, `color`) y métodos (`ladrar`, `correr`, `comer`, `dormir`). Al interactuar con los nodos se despliega una previsualización tipo typewriter del código correspondiente.
+<img width="800" height="430" alt="Abstracción" src="https://github.com/user-attachments/assets/0c97612b-c123-4171-ba57-e0880af9cdeb" />
+
 
 ## Tech Stack
 
