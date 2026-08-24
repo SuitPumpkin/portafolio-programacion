@@ -199,3 +199,17 @@ export const internetSpeedData = {
     songSizeMB: 4,
     uploadGameSizeGB: 78,
 };
+
+export const dataUnitsData = {
+    units: [
+        { name: "Bit", symbol: "b", bits: 1 },
+        { name: "Byte", symbol: "B", bits: 8 },
+        { name: "Kilobyte", symbol: "KB", bits: 8 * 1024 },
+        { name: "Megabyte", symbol: "MB", bits: 8 * 1024 ** 2 },
+        { name: "Gigabyte", symbol: "GB", bits: 8 * 1024 ** 3 },
+        { name: "Terabyte", symbol: "TB", bits: 8 * 1024 ** 4 },
+        { name: "Petabyte", symbol: "PB", bits: 8 * 1024 ** 5 },
+        { name: "Exabyte", symbol: "EB", bits: 8 * 1024 ** 6 },
+        { name: "Zettabyte", symbol: "ZB", bits: 8 * 1024 ** 7 },
+    ],
+};

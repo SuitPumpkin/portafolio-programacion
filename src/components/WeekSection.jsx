@@ -55,19 +55,7 @@ const WeekSection = ({ week }) => {
         </motion.div>
 
         <div className="week-showcase">
-          <div className="week-showcase-viewport">
-            {week.tasks.map((t, index) => (
-              <div
-                key={t.id}
-                className={`week-showcase-slide ${index === currentIndex ? "is-active" : ""}`}
-              >
-                <Skeleton key={`skeleton-${t.id}`} name={`task-${t.id}`} loading={taskLoading && index === currentIndex}>
-                  <TaskShowcase task={t} index={index} />
-                </Skeleton>
-              </div>
-            ))}
-          </div>
-
+          
           <div className="week-showcase-controls">
             <button
               className="showcase-btn showcase-btn-prev"
@@ -101,6 +89,19 @@ const WeekSection = ({ week }) => {
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
+          </div>
+          
+          <div className="week-showcase-viewport">
+            {week.tasks.map((t, index) => (
+              <div
+                key={t.id}
+                className={`week-showcase-slide ${index === currentIndex ? "is-active" : ""}`}
+              >
+                <Skeleton key={`skeleton-${t.id}`} name={`task-${t.id}`} loading={taskLoading && index === currentIndex}>
+                  <TaskShowcase task={t} index={index} />
+                </Skeleton>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -3,12 +3,14 @@ import Abstraccion from "../components/Abstraccion/Abstraccion";
 import DogSvg from "../components/Abstraccion/DogSvg";
 import BaseDeDatos from "../components/BaseDeDatos/BaseDeDatos";
 import InternetSpeed from "../components/InternetSpeed/InternetSpeed";
+import DataUnitsVisualizer from "../components/DataUnitsVisualizer/DataUnitsVisualizer";
 import {
   ikigaiData,
   projects,
   perroProperties,
   perroMethods,
   internetSpeedData,
+  dataUnitsData,
 } from "./week01";
 
 export const weeks = [
@@ -17,7 +19,7 @@ export const weeks = [
     number: "01",
     title: "Tareas de la primer semana",
     description:
-      "Ikigai con lista de proyectos para desarrolar, Abstracción, ... , Bases de datos con tablas primarias y tablas medias, Representación visual de la diferencia entre diferentes medidas digitales.",
+      "Ikigai con lista de proyectos para desarrolar, Abstracción, ... , Bases de datos con tablas primarias y tablas medias, Representación visual de la diferencia entre diferentes medidas digitales, Visualización de unidades de datos de bit a zettabyte.",
     tasks: [
       {
         id: "ikigai",
@@ -69,6 +71,18 @@ export const weeks = [
         component: InternetSpeed,
         props: {
           ...internetSpeedData,
+          showHeader: false,
+        },
+      },
+      {
+        id: "data-units",
+        number: "05",
+        title: "De un Bit a un Zettabyte",
+        description:
+          "Visualización interactiva con Three.js que muestra la diferencia exponencial de escala entre las unidades de medida digitales, desde un bit representado como un cubo hasta un zettabyte.",
+        component: DataUnitsVisualizer,
+        props: {
+          ...dataUnitsData,
           showHeader: false,
         },
       },
