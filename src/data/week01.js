@@ -161,32 +161,41 @@ export const perroMethods = [
     {
         titulo: "ladrar",
         ejemplificacion: `ladrar() {
-  console.log("Guau!");
+    console.log("Guau!");
 }`,
     },
 
     {
         titulo: "correr",
         ejemplificacion: `correr() {
-  console.log("El perro corre");
+    console.log("El perro corre");
 }`,
     },
 
     {
         titulo: "comer",
         ejemplificacion: `comer(comida) {
-  console.log(
-    "Comiendo " + comida
-  );
+    console.log(
+        "Comiendo " + comida
+    );
 }`,
     },
 
     {
         titulo: "dormir",
         ejemplificacion: `dormir() {
-  console.log(
-    "El perro esta durmiendo"
-  );
+    console.log(
+        "El perro esta durmiendo"
+    );
 }`,
     },
 ];
+
+export const internetSpeedData = {
+    provider: "TotalPlay",
+    theoreticalMbps: 200,
+    measuredMbps: 185,
+    downloadSongs: 200,
+    songSizeMB: 4,
+    uploadGameSizeGB: 78,
+};

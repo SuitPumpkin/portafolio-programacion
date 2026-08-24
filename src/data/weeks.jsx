@@ -2,11 +2,13 @@ import Ikigai from "../components/Ikigai/Ikigai";
 import Abstraccion from "../components/Abstraccion/Abstraccion";
 import DogSvg from "../components/Abstraccion/DogSvg";
 import BaseDeDatos from "../components/BaseDeDatos/BaseDeDatos";
+import InternetSpeed from "../components/InternetSpeed/InternetSpeed";
 import {
   ikigaiData,
   projects,
   perroProperties,
   perroMethods,
+  internetSpeedData,
 } from "./week01";
 
 export const weeks = [
@@ -55,6 +57,18 @@ export const weeks = [
           "Modelo de base de datos para una tienda en línea con entidades cliente, producto, pedido y detallePedido. Incluye 200+ registros, 2 vistas (Excel y tablas relacionadas) y relaciones 1:N.",
         component: BaseDeDatos,
         props: {
+          showHeader: false,
+        },
+      },
+      {
+        id: "internet-speed",
+        number: "04",
+        title: "Velocidad de Internet",
+        description:
+          "Comparativa entre la velocidad teórica del proveedor y la velocidad real medida con speedtest.net. Muestra ambas en Mbps y MB/s, y calcula el tiempo de descarga de 200 canciones y la subida de un videojuego de 78 GB.",
+        component: InternetSpeed,
+        props: {
+          ...internetSpeedData,
           showHeader: false,
         },
       },

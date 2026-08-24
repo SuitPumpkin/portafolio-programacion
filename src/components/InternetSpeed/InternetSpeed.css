@@ -1,0 +1,489 @@
+.internet-speed-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 1.5rem);
+
+    box-sizing: border-box;
+    background: #060b16;
+    color: #f8fafc;
+}
+
+.internet-speed-header {
+    width: 100%;
+    max-width: 720px;
+    min-width: 0;
+
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.internet-speed-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 0.75rem;
+
+    color: #a855f7;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.internet-speed-header h2 {
+    margin: 0;
+
+    color: #f8fafc;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+}
+
+.internet-speed-header p {
+    max-width: 620px;
+    margin: 0.9rem auto 0;
+
+    color: #a6afbd;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.internet-speed-body {
+    max-width: 900px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.isp-section {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    padding: 0.85rem 1.25rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+
+    background: rgba(20, 25, 40, 0.6);
+}
+
+.isp-label {
+    color: #94a3b8;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.isp-name {
+    color: #c084fc;
+
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.speed-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.speed-card {
+    padding: 1.5rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+
+    background: rgba(20, 25, 40, 0.6);
+    backdrop-filter: blur(4px);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.speed-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+
+    box-shadow:
+        0 0 0 4px rgba(168, 85, 247, 0.08),
+        0 20px 45px rgba(0, 0, 0, 0.45);
+}
+
+.card-theoretical .speed-card-header {
+    color: #fbbf24;
+}
+
+.card-measured .speed-card-header {
+    color: #60a5fa;
+}
+
+.speed-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    margin-bottom: 1rem;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.speed-card-dot {
+    width: 10px;
+    height: 10px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #a855f7;
+
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+}
+
+.card-theoretical .speed-card-dot {
+    background: #fbbf24;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.7);
+}
+
+.card-measured .speed-card-dot {
+    background: #60a5fa;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.7);
+}
+
+.speed-card-values {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.speed-card-main {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: #f8fafc;
+
+    letter-spacing: -0.02em;
+}
+
+.speed-card-converted {
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.speed-unit {
+    font-size: 0.55em;
+    font-weight: 500;
+
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.speed-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    flex-wrap: wrap;
+}
+
+.selector-label {
+    color: #94a3b8;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.selector-toggle {
+    display: inline-flex;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+
+    background: rgba(16, 20, 30, 0.7);
+
+    overflow: hidden;
+}
+
+.selector-btn {
+    appearance: none;
+
+    border: none;
+    padding: 0.5rem 1.25rem;
+
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.selector-btn:hover {
+    color: #f8fafc;
+}
+
+.selector-btn.is-active {
+    background: rgba(168, 85, 247, 0.2);
+    color: #c084fc;
+}
+
+.selected-speed-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    padding: 0.8rem 1.2rem;
+
+    border-radius: 10px;
+
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.selected-speed-banner span {
+    color: #94a3b8;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.selected-speed-banner strong {
+    color: #c084fc;
+
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.calculation-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.calc-card {
+    padding: 1.5rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #a855f7;
+    border-radius: 16px;
+
+    background: rgba(14, 23, 38, 0.55);
+}
+
+.calc-download {
+    border-left-color: #60a5fa;
+}
+
+.calc-upload {
+    border-left-color: #fbbf24;
+}
+
+.calc-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    margin-bottom: 1.1rem;
+}
+
+.calc-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+
+    font-size: 0.85rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.calc-icon-download {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+.calc-icon-upload {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.calc-card h3 {
+    margin: 0;
+
+    color: #f8fafc;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.calc-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    margin-bottom: 1rem;
+}
+
+.calc-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 0.6rem;
+
+    padding: 0.5rem 0.75rem;
+
+    border-radius: 8px;
+
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.detail-total {
+    background: rgba(168, 85, 247, 0.08);
+}
+
+.calc-detail-row span:first-child {
+    color: #94a3b8;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.detail-value {
+    color: #e4e4e7 !important;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.calc-card-result {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    padding-top: 0.75rem;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.result-label {
+    color: #94a3b8;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.result-value {
+    color: #c084fc;
+
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.conversion-reference {
+    margin-top: 0.5rem;
+}
+
+.conversion-reference h4 {
+    margin: 0 0 0.9rem;
+
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.conversion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.conversion-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    padding: 0.85rem 1rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+
+    background: rgba(20, 25, 40, 0.4);
+}
+
+.conversion-eq {
+    color: #f8fafc;
+
+    font-size: 0.9rem;
+    font-weight: 800;
+    font-family:
+        "JetBrains Mono",
+        "Fira Code",
+        monospace;
+}
+
+.conversion-desc {
+    color: #71717a;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .internet-speed-container {
+        padding: 3rem 0.75rem;
+    }
+
+    .internet-speed-header h2 {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+    }
+
+    .speed-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .calculation-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .speed-card-main {
+        font-size: 1.6rem;
+    }
+
+    .isp-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+
+    .selected-speed-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+}
