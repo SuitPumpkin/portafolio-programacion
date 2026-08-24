@@ -11,10 +11,15 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 
 - **Abstracción: El perro**: Visualización interactiva del concepto de abstracción en programación orientada a objetos, representado mediante un objeto `perro` con propiedades (`nombre`, `edad`, `raza`, `color`) y métodos (`ladrar`, `correr`, `comer`, `dormir`). Al interactuar con los nodos se despliega una previsualización tipo typewriter del código correspondiente.
 <img width="800" height="430" alt="Abstracción" src="https://github.com/user-attachments/assets/0c97612b-c123-4171-ba57-e0880af9cdeb" />
-- **Base de datos: Tienda online: visualizacion del libro de excel y las relaciones entre las tablas. (hay un error visual que no logre solucionar con la tabla, pero es funcional xddd)
-<img width="1283" height="835" alt="imagen" src="https://github.com/user-attachments/assets/2404318b-d19b-404d-8182-d8348097c1ac" />
 
+- **Base de datos: Tienda online**: visualizacion del libro de excel y las relaciones entre las tablas. (hay un error visual que no logre solucionar con la tabla, pero es funcional xddd)
+<img width="1180" height="909" alt="imagen" src="https://github.com/user-attachments/assets/73b3828e-1585-410a-8e24-18ea055cda0f" />
 
+- **Velocidad de internet**: Calculo de la velocidad teorica y real de internet y comparandolo en distintas tareas practicas con tiempos de carga y descarga estimados
+<img width="1153" height="855" alt="imagen" src="https://github.com/user-attachments/assets/a9e43be6-833e-4c43-bb5e-efaff5e27b4a" />
+
+- **Visualizador de escalas: Unidades de medida de software**: Visualizador en tree.js que permite visualizar la diferencia entre una unidad y la siguiente, desde el Bit hasta el Zettabyte.
+(aqui va la imagen cuando se renderice bien)
 
 ## Tech Stack
 
