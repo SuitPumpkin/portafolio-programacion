@@ -1,16 +1,42 @@
-# React + Vite
+# Portafolio de Programación 3
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portafolio digital de la materia **Programación 3** de la carrera de **Creatividad Digital**. El proyecto reúne las actividades y tareas realizadas durante el cursado, presentadas como una experiencia web interactiva organizada por semanas.
 
-Currently, two official plugins are available:
+## Contenido
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Semana 01 — Tareas de la primer semana
 
-## React Compiler
+- **Mi Ikigai**: Diagrama de Venn interactivo construido con D3.js que visualiza las 4 dimensiones del Ikigai (lo que amas, lo que se te da bien, lo que el mundo necesita, y por lo que te pagan). Incluye tooltips animados al pasar el cursor y una sección de proyectos personales inspirados en el concepto.
+- **Abstracción: El perro**: Visualización interactiva del concepto de abstracción en programación orientada a objetos, representado mediante un objeto `perro` con propiedades (`nombre`, `edad`, `raza`, `color`) y métodos (`ladrar`, `correr`, `comer`, `dormir`). Al interactuar con los nodos se despliega una previsualización tipo typewriter del código correspondiente.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19** — Librería UI
+- **Vite** — Bundler y dev server
+- **Motion** — Animaciones y transiciones
+- **D3.js** — Visualización de datos (diagrama Ikigai)
+- **Boneyard-js** — Skeleton loading states
+- **ESLint** — Linting
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+No utiliza librerías de routing ni frameworks CSS; todo el estilado se maneja con CSS modules y la navegación es de una sola página con scroll suave entre semanas.
+
+## Desarrollo
+
+```bash
+# Instalar dependencias
+npm install
+
+# Servidor de desarrollo
+npm run dev
+
+# Build de producción
+npm run build
+
+# Lint
+npm run lint
+```
+
+## Estado actual
+
+- Semana 01 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
+- Semana 02 pendiente de implementación.
