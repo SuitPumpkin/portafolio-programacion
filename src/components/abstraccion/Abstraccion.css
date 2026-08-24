@@ -35,7 +35,7 @@
 
 .abstraction-scroll {
     width: 100%;
-    overflow-x: auto;
+    overflow: hidden;
     padding: 2rem 0 3rem;
 }
 
@@ -45,6 +45,8 @@
     min-width: 900px;
     height: 520px;
     margin: 0 auto;
+    transform-origin: top center;
+    will-change: transform;
 }
 
 .abstraction-lines {

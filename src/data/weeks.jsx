@@ -1,6 +1,7 @@
 import Ikigai from "../components/Ikigai/Ikigai";
 import Abstraccion from "../components/Abstraccion/Abstraccion";
 import DogSvg from "../components/Abstraccion/DogSvg";
+import BaseDeDatos from "../components/BaseDeDatos/BaseDeDatos";
 import {
   ikigaiData,
   projects,
@@ -43,6 +44,17 @@ export const weeks = [
           svg: <DogSvg />,
           propiedades: perroProperties,
           metodos: perroMethods,
+          showHeader: false,
+        },
+      },
+      {
+        id: "tienda",
+        number: "03",
+        title: "Base de datos: Tienda en línea",
+        description:
+          "Modelo de base de datos para una tienda en línea con entidades cliente, producto, pedido y detallePedido. Incluye 200+ registros, 2 vistas (Excel y tablas relacionadas) y relaciones 1:N.",
+        component: BaseDeDatos,
+        props: {
           showHeader: false,
         },
       },

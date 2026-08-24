@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useFitScale } from "../../hooks/useFitScale";
 import "./Abstraccion.css";
 
 function useTypewriter(text, active, speed = 25) {
@@ -115,6 +116,9 @@ export default function Abstraccion({
     metodos = [],
 }) {
     const [active, setActive] = useState(null);
+    const scrollRef = useRef(null);
+    const stageRef = useRef(null);
+    const scale = useFitScale(stageRef, scrollRef, { minScale: 0.4, maxScale: 1 });
 
     const maxItems = Math.max(
         propiedades.length,
@@ -156,12 +160,18 @@ export default function Abstraccion({
             </div>
 
             <div
+                ref={scrollRef}
                 className="abstraction-scroll"
+                style={{ height: `${stageHeight * scale + 80}px` }}
             >
                 <div
+                    ref={stageRef}
                     className="abstraction-stage"
                     style={{
                         height: `${stageHeight}px`,
+                        transform: `scale(${scale})`,
+                        transformOrigin: "top center",
+                        margin: "0 auto",
                     }}
                 >
 
