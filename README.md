@@ -21,6 +21,10 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 - **Visualizador de escalas: Unidades de medida de software**: Visualizador en tree.js que permite visualizar la diferencia entre una unidad y la siguiente, desde el Bit hasta el Zettabyte.
 <img width="1097" height="870" alt="imagen" src="https://github.com/user-attachments/assets/5e7bb41a-de25-4377-823e-2e37ba406aa6" />
 
+### Semana 02 — Tareas de la segunda semana (las tareas fueron consultas y ejercicios en Sqlite3 asi que para representarlo mejor implemento sqlite3 aqui)
+
+- **Componente Sqlite3 funcional**: Componente funcional de SQLite3 en el navegador. Soporta archivos .db y .sql, historial de consultas y descarga de la base de datos.
+<img width="1079" height="802" alt="imagen" src="https://github.com/user-attachments/assets/f174c908-a420-4726-9697-372e93e4030a" />
 
 ## Tech Stack
 
