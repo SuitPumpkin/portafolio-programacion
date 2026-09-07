@@ -208,7 +208,7 @@
     display: flex;
     gap: 0.75rem;
     overflow-x: auto;
-    padding: 1rem 0;
+    padding: 1rem max(1rem, calc(50% - 50px));
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
