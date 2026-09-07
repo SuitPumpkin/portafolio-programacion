@@ -19,7 +19,8 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 <img width="1153" height="855" alt="imagen" src="https://github.com/user-attachments/assets/a9e43be6-833e-4c43-bb5e-efaff5e27b4a" />
 
 - **Visualizador de escalas: Unidades de medida de software**: Visualizador en tree.js que permite visualizar la diferencia entre una unidad y la siguiente, desde el Bit hasta el Zettabyte.
-(aqui va la imagen cuando se renderice bien)
+<img width="1097" height="870" alt="imagen" src="https://github.com/user-attachments/assets/5e7bb41a-de25-4377-823e-2e37ba406aa6" />
+
 
 ## Tech Stack
 
