@@ -27,6 +27,7 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 <img width="1079" height="802" alt="imagen" src="https://github.com/user-attachments/assets/f174c908-a420-4726-9697-372e93e4030a" />
 
 - **Base de datos a Diagrama ER**: Genera un diagrama Entidad-Relación a partir de un archivo SQLite, detectando tablas, columnas, tipos, claves primarias y foráneas.
+<img width="882" height="879" alt="imagen" src="https://github.com/user-attachments/assets/5df895f5-8f9a-4d8c-b4a3-c8b3ecee3fde" />
 
 
 ## Tech Stack
