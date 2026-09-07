@@ -5,6 +5,7 @@ import BaseDeDatos from "../components/BaseDeDatos/BaseDeDatos";
 import InternetSpeed from "../components/InternetSpeed/InternetSpeed";
 import DataUnitsVisualizer from "../components/DataUnitsVisualizer/DataUnitsVisualizer";
 import SqliteConsole from "../components/SqliteConsole/SqliteConsole";
+import ERDiagram from "../components/ERDiagram/ERDiagram";
 import {
   ikigaiData,
   projects,
@@ -13,7 +14,7 @@ import {
   internetSpeedData,
   dataUnitsData,
 } from "./week01";
-import { sqliteConsoleData } from "./week02";
+import { sqliteConsoleData, erDiagramData } from "./week02";
 
 export const weeks = [
   {
@@ -106,6 +107,18 @@ export const weeks = [
         component: SqliteConsole,
         props: {
           ...sqliteConsoleData,
+          showHeader: false,
+        },
+      },
+      {
+        id: "er-diagram",
+        number: "02",
+        title: "Diagrama ER desde .db",
+        description:
+          "Genera un diagrama Entidad-Relación a partir de un archivo SQLite, detectando tablas, columnas, tipos, claves primarias y foráneas.",
+        component: ERDiagram,
+        props: {
+          ...erDiagramData,
           showHeader: false,
         },
       },

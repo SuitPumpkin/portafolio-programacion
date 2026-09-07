@@ -26,6 +26,9 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 - **Componente Sqlite3 funcional**: Componente funcional de SQLite3 en el navegador. Soporta archivos .db y .sql, historial de consultas y descarga de la base de datos.
 <img width="1079" height="802" alt="imagen" src="https://github.com/user-attachments/assets/f174c908-a420-4726-9697-372e93e4030a" />
 
+- **Base de datos a Diagrama ER**: Genera un diagrama Entidad-Relación a partir de un archivo SQLite, detectando tablas, columnas, tipos, claves primarias y foráneas.
+
+
 ## Tech Stack
 
 - **React 19** — Librería UI
@@ -56,4 +59,5 @@ npm run lint
 ## Estado actual
 
 - Semana 01 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
-- Semana 02 completa (mas o menos) las tareas fueron consultas y ejercicios en Sqlite3 asi que para representarlo mejor implemente un componente capaz de usar sqlite3 aqui como si fuera la consola o un editor de DB.
+- Semana 02 y 03 completas (mas o menos) las tareas fueron consultas y ejercicios en Sqlite3 asi que para representarlo mejor implemente un componente capaz de usar sqlite3 aqui como si fuera la consola o un editor de DB.
+- Semana 04 en progreso
