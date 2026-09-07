@@ -4,6 +4,7 @@ import DogSvg from "../components/Abstraccion/DogSvg";
 import BaseDeDatos from "../components/BaseDeDatos/BaseDeDatos";
 import InternetSpeed from "../components/InternetSpeed/InternetSpeed";
 import DataUnitsVisualizer from "../components/DataUnitsVisualizer/DataUnitsVisualizer";
+import SqliteConsole from "../components/SqliteConsole/SqliteConsole";
 import {
   ikigaiData,
   projects,
@@ -12,6 +13,7 @@ import {
   internetSpeedData,
   dataUnitsData,
 } from "./week01";
+import { sqliteConsoleData } from "./week02";
 
 export const weeks = [
   {
@@ -83,6 +85,27 @@ export const weeks = [
         component: DataUnitsVisualizer,
         props: {
           ...dataUnitsData,
+          showHeader: false,
+        },
+      },
+    ],
+  },
+  {
+    id: "semana-2",
+    number: "02",
+    title: "Tareas de la segunda semana",
+    description:
+      "Consola SQLite3 interactiva que permite ejecutar consultas SQL sobre archivos .db, guardar consultas como .sql y descargar la base de datos modificada.",
+    tasks: [
+      {
+        id: "sqlite-console",
+        number: "01",
+        title: "Consola SQLite3",
+        description:
+          "Componente funcional de SQLite3 en el navegador. Soporta archivos .db y .sql, historial de consultas y descarga de la base de datos.",
+        component: SqliteConsole,
+        props: {
+          ...sqliteConsoleData,
           showHeader: false,
         },
       },
