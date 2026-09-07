@@ -93,10 +93,10 @@ export const weeks = [
   },
   {
     id: "semana-2",
-    number: "02",
-    title: "Tareas de la segunda semana",
+    number: "2 y 3",
+    title: "Tareas de la segunda y tercera semana",
     description:
-      "Consola SQLite3 interactiva que permite ejecutar consultas SQL sobre archivos .db, guardar consultas como .sql y descargar la base de datos modificada.",
+      "Consola SQLite3 interactiva y generador de diagramas ER desde archivos .db. Incluye ejecución de consultas SQL, historial, guardado de .sql y descarga de bases de datos modificadas.",
     tasks: [
       {
         id: "sqlite-console",

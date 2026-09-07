@@ -4,7 +4,7 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 
 ## Contenido
 
-### Semana 01 — Tareas de la primer semana
+### Semana 1 — Tareas de la primer semana
 
 - **Mi Ikigai**: Diagrama de Venn interactivo construido con D3.js que visualiza las 4 dimensiones del Ikigai (lo que amas, lo que se te da bien, lo que el mundo necesita, y por lo que te pagan). Incluye tooltips animados al pasar el cursor y una sección de proyectos personales inspirados en el concepto.
 <img width="800" height="430" alt="ikigai" src="https://github.com/user-attachments/assets/b5c0d597-5c37-4943-97d7-6ee8f4e46c30" />
@@ -21,12 +21,22 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 - **Visualizador de escalas: Unidades de medida de software**: Visualizador en tree.js que permite visualizar la diferencia entre una unidad y la siguiente, desde el Bit hasta el Zettabyte.
 <img width="1097" height="870" alt="imagen" src="https://github.com/user-attachments/assets/5e7bb41a-de25-4377-823e-2e37ba406aa6" />
 
-### Semana 02 — Tareas de la segunda semana
+### Semanas 2 y 3 — Tareas de la segunda y tercer semana
 
-- **Componente Sqlite3 funcional**: Componente funcional de SQLite3 en el navegador. Soporta archivos .db y .sql, historial de consultas y descarga de la base de datos.
+- **Componente Sqlite3 funcional**: Componente funcional de SQLite3 en el navegador. Soporta archivos `.db` y `.sql`, historial de consultas y descarga de la base de datos.
+  - Carga archivos `.db` existentes para explorarlos
+  - Crea bases de datos nuevas con datos de ejemplo
+  - Ejecuta consultas SQL con `Ctrl + Enter`
+  - Guarda las consultas como archivos `.sql`
+  - Descarga la base de datos modificada como `.db`
+  - Mantiene historial de consultas ejecutadas
 <img width="1079" height="802" alt="imagen" src="https://github.com/user-attachments/assets/f174c908-a420-4726-9697-372e93e4030a" />
 
 - **Base de datos a Diagrama ER**: Genera un diagrama Entidad-Relación a partir de un archivo SQLite, detectando tablas, columnas, tipos, claves primarias y foráneas.
+  - Carga archivos `.db` para analizar su estructura
+  - Genera automáticamente el código Mermaid del diagrama ER
+  - Detecta relaciones y claves foráneas
+  - Permite copiar el código Mermaid para reutilizarlo
 <img width="882" height="879" alt="imagen" src="https://github.com/user-attachments/assets/5df895f5-8f9a-4d8c-b4a3-c8b3ecee3fde" />
 
 
@@ -37,6 +47,8 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
 - **Motion** — Animaciones y transiciones
 - **D3.js** — Visualización de datos (diagrama Ikigai)
 - **Boneyard-js** — Skeleton loading states
+- **sql.js** — Motor SQLite en el navegador
+- **Mermaid** — Diagramas ER a partir de bases de datos
 - **ESLint** — Linting
 
 No utiliza librerías de routing ni frameworks CSS; todo el estilado se maneja con CSS modules y la navegación es de una sola página con scroll suave entre semanas.
@@ -59,6 +71,6 @@ npm run lint
 
 ## Estado actual
 
-- Semana 01 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
-- Semana 02 y 03 completas (mas o menos) las tareas fueron consultas y ejercicios en Sqlite3 asi que para representarlo mejor implemente un componente capaz de usar sqlite3 aqui como si fuera la consola o un editor de DB.
+- Semana 1 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
+- Semana 2 completa: consola SQLite3 funcional y generador de diagramas ER desde archivos `.db`.
 - Semana 04 en progreso
