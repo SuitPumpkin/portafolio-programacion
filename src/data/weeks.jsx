@@ -15,6 +15,8 @@ import {
   dataUnitsData,
 } from "./week01";
 import { sqliteConsoleData, erDiagramData } from "./week02";
+import { htmlCheatsheetData } from "./week04";
+import HTMLCheatsheet from "../components/HTMLCheatsheet/HTMLCheatsheet";
 
 export const weeks = [
   {
@@ -119,6 +121,27 @@ export const weeks = [
         component: ERDiagram,
         props: {
           ...erDiagramData,
+          showHeader: false,
+        },
+      },
+    ],
+  },
+  {
+    id: "semana-4",
+    number: "04",
+    title: "Tareas de la cuarta semana",
+    description:
+      "Cheatsheet de HTML5 con los tags, atributos y estructuras más comunes, basada en la guía de Syntax Simplified.",
+    tasks: [
+      {
+        id: "html-cheatsheet",
+        number: "01",
+        title: "Cheatsheet de HTML5",
+        description:
+          "Referencia rápida de HTML5 con los tags, atributos y valores más utilizados, organizada por categorías (documento, texto, listas, formularios, multimedia, metadatos).",
+        component: HTMLCheatsheet,
+        props: {
+          ...htmlCheatsheetData,
           showHeader: false,
         },
       },

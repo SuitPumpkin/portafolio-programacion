@@ -73,4 +73,4 @@ npm run lint
 
 - Semana 1 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
 - Semana 2 completa: consola SQLite3 funcional y generador de diagramas ER desde archivos `.db`.
-- Semana 04 en progreso
+- Semana 04 en progreso: cheatsheet de HTML5 basada en Syntax Simplified.
