@@ -48,6 +48,7 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
   - Formularios y inputs (tipos de input, select, botones, fieldset)
   - Multimedia (img, video, audio, iframe, picture, canvas)
   - Enlaces y metadatos (a, link, script, meta)
+<img width="1264" height="815" alt="imagen" src="https://github.com/user-attachments/assets/1b0dc8c6-155c-4e83-804f-fe86affdfb59" />
 
 
 ## Tech Stack
