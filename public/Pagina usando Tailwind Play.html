@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Aprovechando que la pagina soporta responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+    </style>
+    <title>SuitPumpkin.dev</title>
+  </head>
+
+  <!-- Este codigo esta basado en el rediseño que estoy haciendo para mi portafolio profesional real aprovechando lo que trabaje en diseño grafico el semestre pasado de hecho jaja por eso uso codigos HEX tan especificos -->
+
+  <body class="m-0 bg-[#F2F0EF] text-[#262626]">
+    <header class="border-b border-[#B39148]/40 bg-[#F2F0EF] px-6 py-5 md:px-12">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between">
+        <a href="#" class="flex items-center gap-3 no-underline">
+          <div class="text-3xl font-bold tracking-[0.15em] text-[#262626]">Suit<span class="text-[#AC393B]">P</span></div>
+
+          <span class="hidden border-l border-[#B39148]/60 pl-3 text-xs tracking-[0.35em] text-[#B39148] uppercase sm:block"> Developer </span>
+        </a>
+
+        <div class="flex gap-4 text-sm md:gap-8">
+          <a href="#about" class="text-[#262626] transition hover:text-[#AC393B]"> About </a>
+
+          <a href="#games" class="text-[#262626] transition hover:text-[#AC393B]"> Games </a>
+
+          <a href="#music" class="text-[#262626] transition hover:text-[#AC393B]"> Music </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2 md:px-12 md:py-28">
+        <div>
+          <span class="text-sm font-bold tracking-[0.4em] text-[#B39148] uppercase"> &lt; developer / gamer &gt; </span>
+
+          <h1 class="mt-5 text-5xl leading-none font-black tracking-tight md:text-7xl">Suit<span class="text-[#AC393B]">Pumpkin</span><span class="text-[#B39148]">.dev</span></h1>
+
+          <p class="mt-6 max-w-xl text-lg leading-8 text-[#262626]/70">
+            Buenas, esta es mi pagina personal creada
+            <b class="text-[#262626]">provisiionalmente</b>
+            para aprovecharla luego en mi portafolio real.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#games" class="rounded-md bg-[#AC393B] px-6 py-3 font-bold text-[#F2F0EF] transition hover:bg-[#262626]"> Mis intereses </a>
+
+            <a href="#about" class="rounded-md border border-[#B39148] px-6 py-3 font-bold text-[#B39148] transition hover:bg-[#B39148] hover:text-[#262626]"> Quien soy </a>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <div class="flex h-72 w-72 flex-col items-center justify-center border border-[#B39148]/50 bg-[#262626] text-center shadow-2xl md:h-80 md:w-80">
+            <div class="text-6xl font-black tracking-[0.15em] text-[#F2F0EF]">Su<span class="text-[#AC393B]">i</span>tP</div>
+
+            <div class="mt-4 h-1 w-40 bg-[#AC393B]"></div>
+
+            <p class="mt-5 text-sm font-bold tracking-[0.5em] text-[#B39148] uppercase">Developer</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="border-y border-[#B39148]/30 bg-white px-6 py-16 text-[#262626] md:px-12">
+        <div class="mx-auto max-w-6xl">
+          <span class="text-sm font-bold tracking-[0.35em] text-[#AC393B] uppercase"> 01 — About </span>
+
+          <h2 class="mt-3 text-3xl font-black md:text-4xl">Un poco sobre mí</h2>
+
+          <div class="mt-8 grid gap-8 md:grid-cols-3">
+            <div class="border-l-4 border-[#AC393B] pl-5">
+              <h3 class="text-xl font-bold">Creatividad digital</h3>
+
+              <p class="mt-2 text-sm leading-7 text-[#262626]/70">Actualmente estudio la Licenciatura en Creatividad Digital, combinando los conocimientos con los ya adquiridos previamente en mi otra carrera.</p>
+            </div>
+
+            <div class="border-l-4 border-[#B39148] pl-5">
+              <h3 class="text-xl font-bold">Programación</h3>
+
+              <p class="mt-2 text-sm leading-7 text-[#262626]/70">Desde primaria comencé a programar gracias a mi interés por crear mods para minecraft xd y proyectos relacionados con videojuegos sencillos que fueron evolucionando con los años.</p>
+            </div>
+
+            <div class="border-l-4 border-[#AC393B] pl-5">
+              <h3 class="text-xl font-bold">Game development</h3>
+
+              <p class="mt-2 text-sm leading-7 text-[#262626]/70">Actualmente mi principal interés es el desarrollo de videojuegos, aunque también disfruto crear proyectos web, desktop y de seguridad. B)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="games" class="mx-auto max-w-6xl px-6 py-16 md:px-12">
+        <span class="text-sm font-bold tracking-[0.35em] text-[#B39148] uppercase"> 02 — Games </span>
+
+        <h2 class="mt-3 text-3xl font-black md:text-4xl">Mis Videojuegos Favoritos</h2>
+
+        <p class="mt-4 max-w-2xl text-[#262626]/70">Algunos videojuegos que han formado parte de mi historia como jugador y que también alimentan mi interés por crear mis propios mundos.</p>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <article class="group overflow-hidden border border-[#B39148]/30 bg-[#262626] shadow-lg transition hover:-translate-y-2 hover:border-[#AC393B]">
+            <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/capsule_616x353.jpg?t=1769844435" alt="Portada de Terraria" class="h-64 w-full object-cover transition duration-500 group-hover:scale-105" />
+
+            <div class="p-5">
+              <span class="text-xs font-bold tracking-[0.25em] text-[#B39148] uppercase"> Sandbox / Aventura </span>
+
+              <h3 class="mt-2 text-2xl font-bold text-[#F2F0EF]">Terraria</h3>
+
+              <p class="mt-2 text-sm leading-6 text-[#F2F0EF]/60">Minecraft 2D con mecanicas y progresión RPG mas marcadas e interesantes.</p>
+
+              <a href="https://store.steampowered.com/app/105600/Terraria/" target="_blank" class="mt-4 inline-block text-sm font-bold text-[#AC393B] hover:text-[#B39148]"> Checalo en steam </a>
+            </div>
+          </article>
+
+          <article class="group overflow-hidden border border-[#B39148]/30 bg-[#262626] shadow-lg transition hover:-translate-y-2 hover:border-[#AC393B]">
+            <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/MCV_SummerDrop_Hero_DotNet_Downloadable_Wallpaper_r414x414.png" alt="Portada de Minecraft" class="h-64 w-full object-cover transition duration-500 group-hover:scale-105" />
+
+            <div class="p-5">
+              <span class="text-xs font-bold tracking-[0.25em] text-[#B39148] uppercase"> Sandbox / Exploración </span>
+
+              <h3 class="mt-2 text-2xl font-bold text-[#F2F0EF]">Minecraft</h3>
+
+              <p class="mt-2 text-sm leading-6 text-[#F2F0EF]/60">El primer juego que me hizo interesarme en la creación de mods para el mismo, 10/10.</p>
+
+              <a href="https://www.minecraft.net/" target="_blank" class="mt-4 inline-block text-sm font-bold text-[#AC393B] hover:text-[#B39148]"> Wacha la página </a>
+            </div>
+          </article>
+
+          <article class="group overflow-hidden border border-[#B39148]/30 bg-[#262626] shadow-lg transition hover:-translate-y-2 hover:border-[#AC393B]">
+            <img src="https://i.3djuegos.com/juegos/17986/palworld/fotos/ficha/palworld-5861112.jpg" alt="Imagen promocional de Palworld" class="h-64 w-full object-cover transition duration-500 group-hover:scale-105" />
+
+            <div class="p-5">
+              <span class="text-xs font-bold tracking-[0.25em] text-[#B39148] uppercase"> Automatización / Mundo abierto </span>
+
+              <h3 class="mt-2 text-2xl font-bold text-[#F2F0EF]">Palworld</h3>
+
+              <p class="mt-2 text-sm leading-6 text-[#F2F0EF]/60">Pokémon con armas, automatización y tiene colaboración con terraria, tambien esta bueno.</p>
+
+              <a href="https://store.steampowered.com/app/1623730/Palworld/?l=spanish" target="_blank" class="mt-4 inline-block text-sm font-bold text-[#AC393B] hover:text-[#B39148]"> Checalo en steam </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="music" class="bg-[#AC393B] px-6 py-16 text-[#F2F0EF] md:px-12">
+        <div class="mx-auto max-w-6xl">
+          <span class="text-sm font-bold tracking-[0.35em] text-[#F2F0EF]/70 uppercase"> 03 — Music </span>
+
+          <h2 class="mt-3 text-3xl font-black md:text-4xl">Música que me gusta</h2>
+
+          <p class="mt-4 max-w-2xl text-[#F2F0EF]/75">En general mis gustos son bastante variados pero son rotativos, dentro de los muchos artistas que suelo escuchar estos son los que se suelen mantener constantes en mi playlist.</p>
+
+          <div class="mt-10 grid gap-4 md:grid-cols-3">
+
+            <div class="group relative min-h-[280px] overflow-hidden border border-[#F2F0EF]/30 bg-cover bg-center transition hover:border-[#B39148]" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCWfk_urLagADcg0uVl-6z6dQChiPOSdVz2TDK9HHvTXYsU2rR3Flveao&s=10');">
+              <div class="absolute inset-0 bg-black/65 transition duration-300 group-hover:bg-black/45"></div>
+
+              <div class="relative z-10 flex h-full flex-col justify-between p-6">
+                <span class="text-3xl text-[#B39148]">01</span>
+
+                <div>
+                  <h3 class="text-2xl font-bold">Måneskin</h3>
+                  <i class="mt-2 block text-sm text-[#F2F0EF]/70"> Rock / Alternative </i>
+                </div>
+              </div>
+            </div>
+
+            <div class="group relative min-h-[280px] overflow-hidden border border-[#F2F0EF]/30 bg-cover bg-center transition hover:border-[#B39148]" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAFiMbmifiQ30FxU-qdbbwb0SL_ObgR3DlxoW7g9s29e65p0fcaibKwy0&s=10');">
+              <div class="absolute inset-0 bg-black/65 transition duration-300 group-hover:bg-black/45"></div>
+
+              <div class="relative z-10 flex h-full flex-col justify-between p-6">
+                <span class="text-3xl text-[#B39148]">02</span>
+
+                <div>
+                  <h3 class="text-2xl font-bold">Palaye Royale</h3>
+                  <i class="mt-2 block text-sm text-[#F2F0EF]/70"> Alternative / Rock </i>
+                </div>
+              </div>
+            </div>
+
+            <div class="group relative min-h-[280px] overflow-hidden border border-[#F2F0EF]/30 bg-cover bg-center transition hover:border-[#B39148]" style="background-image: url('https://www.rollingstone.com/wp-content/uploads/2020/02/THE-WEEKND-by-Duncan-Loudon.jpg?w=1581&h=1054&crop=1');">
+              <div class="absolute inset-0 bg-black/65 transition duration-300 group-hover:bg-black/45"></div>
+
+              <div class="relative z-10 flex h-full flex-col justify-between p-6">
+                <span class="text-3xl text-[#B39148]">03</span>
+
+                <div>
+                  <h3 class="text-2xl font-bold">The Weeknd</h3>
+                  <i class="mt-2 block text-sm text-[#F2F0EF]/70"> R&B / Pop </i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#B39148]/40 bg-[#F2F0EF] px-6 py-8 md:px-12">
+      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+        <div>
+          <p class="font-bold tracking-[0.15em]">Suit<span class="text-[#AC393B]">Pumpkin</span><span class="text-[#B39148]">.dev</span></p>
+        </div>
+        <span class="text-xs text-[#262626]/40"> Programación 3 - 2026. </span>
+      </div>
+    </footer>
+  </body>
+</html>
