@@ -37,7 +37,17 @@ Portafolio digital de la materia **Programación 3** de la carrera de **Creativi
   - Genera automáticamente el código Mermaid del diagrama ER
   - Detecta relaciones y claves foráneas
   - Permite copiar el código Mermaid para reutilizarlo
-<img width="882" height="879" alt="imagen" src="https://github.com/user-attachments/assets/5df895f5-8f9a-4d8c-b4a3-c8b3ecee3fde" />
+  <img width="882" height="879" alt="imagen" src="https://github.com/user-attachments/assets/5df895f5-8f9a-4d8c-b4a3-c8b3ecee3fde" />
+
+### Semana 4 — Tareas de la cuarta semana
+
+- **Cheatsheet de HTML5**: Referencia rápida visual de HTML5 con los tags, atributos y estructuras más utilizados, basada en la guía de [Syntax Simplified](https://syntaxsimplified.com/cheatsheet/HTML/hypertext_markup_language.html). Organizada en 6 tarjetas por categoría, con código resaltado sintácticamente y ejemplos prácticos.
+  - Documento HTML (estructura base, head/body, layout semántico)
+  - Encabezados y texto (h1-h6, `<pre>`, tags de formato y de tono)
+  - Listas y tablas (ol, ul, dl, table/thead/tbody)
+  - Formularios y inputs (tipos de input, select, botones, fieldset)
+  - Multimedia (img, video, audio, iframe, picture, canvas)
+  - Enlaces y metadatos (a, link, script, meta)
 
 
 ## Tech Stack
@@ -73,4 +83,4 @@ npm run lint
 
 - Semana 1 completa con tareas hechas en forma de componente, de tal forma que sean reusables en futuras tareas de ser el caso.
 - Semana 2 completa: consola SQLite3 funcional y generador de diagramas ER desde archivos `.db`.
-- Semana 04 en progreso: cheatsheet de HTML5 basada en Syntax Simplified.
+- Semana 4 completa: cheatsheet de HTML5 basada en Syntax Simplified, con 6 categorías de tags y código resaltado sintácticamente.
